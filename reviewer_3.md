@@ -6,30 +6,79 @@ We thank the reviewer for the detailed critique and address each weakness or edi
 
 ### 1. Abstract omits annotation type (“classification/point labels”)
 
-The Abstract will be updated to read:
-*“… **sparse point‑level hard‑coral labels** that support patch **classification** of 925K points across 181K in‑situ images.”*
+To avoid ambiguity, we will revise the abstract to **explicitly state the annotation type and task**. While the current text mentions “genus-level hard-coral annotations,” it omits the fact that these are **sparse point-based labels** used for **patch-level classification**.
 
-### 2. Only hard‑coral annotations – clarify title and abstract
+To clarify this, we will update the sentence:
 
-We agree and will add “*(hard corals)*” in both the title and the first sentence of the Abstract, plus a footnote in §3.1 noting that soft corals, algae, and invertebrates—although visible—are not annotated in this version of the dataset.
+> “...totaling ∼925K genus-level hard-coral annotations with expert-verified labels.”
 
-### 3. Patch extraction protocol unclear (§5.1)
+to:
 
-Patches are square crops of size `512×512 px` centered on each point. We will move this detail (with schematic) to §3.1 and reference it in §5.1 and the caption of Fig. 4.
+> “...totaling ∼925K **sparse point-level genus annotations** with expert-verified labels, supporting localized **patch-level classification**.”
 
-### 4. Lines 90–94: clarify gap and ReefNet vs BenthicNet
+This modification accurately reflects ReefNet’s annotation format and task setup, helping readers distinguish it from image-level classification, object detection, or segmentation pipelines.
+We appreciate the reviewer’s feedback and believe this clarification will strengthen the paper’s clarity for both machine learning and ecological audiences.
 
-While BenthicNet is a valuable global collection of seafloor imagery, its annotations are primarily image- or frame-level and use the CATAMI scheme, which categorizes broad substrate types (e.g., sand, algae, generic coral). Though some of its source datasets reference WoRMS, this is limited and not systematically applied.
+### 2. Clarifying Scope: Focus on Hard Corals in Abstract and Title
 
-In contrast, ReefNet was purpose-built for genus-level classification of hard corals, with nearly one million point-level annotations, each rigorously curated and standardized via WoRMS taxonomy. Furthermore, ReefNet includes expert-reviewed subsets, fine-grained class filtering, and multiple benchmarking splits explicitly designed to evaluate domain generalization, a core challenge in ecological ML.
+ReefNet indeed focuses **exclusively on hard corals (Order: Scleractinia)** — the most ecologically foundational, structurally distinct, and consistently annotated group in global reef-monitoring programs. While other benthic taxa (e.g., soft corals, algae, sponges) may be present in some imagery or initial annotations, they are **explicitly excluded** from ReefNet’s curated label set. This exclusion reflects both our study’s focus and the practical consideration that our team’s taxonomic validation expertise lies primarily in hard corals.
 
-ReefNet fills a critical gap in the ecosystem by enabling taxonomically grounded, high-resolution, cross-site coral classification, which BenthicNet does not currently support. We will revise the paper to make this distinction unambiguous.
+To eliminate ambiguity, we will:
+- **Revise the abstract** to state:
 
-### 5. Why WoRMS instead of CATAMI?
+> “…totaling ∼925K **point-level annotations of hard coral genera**, with other benthic taxa excluded…”
 
-We deliberately chose WoRMS because our goal is fine-grained, taxonomically valid classification of hard coral genera—a level of specificity not supported by CATAMI, which is designed for broader habitat categories. WoRMS provides globally curated genus-level identifiers (AphiaIDs), enabling ecological consistency, cross-dataset interoperability, and scientific traceability critical for biodiversity monitoring and taxonomic grounding.
+- **Clarify the dataset scope** in the Introduction and Section 3, noting that ReefNet is purpose-built for fine-grained classification of hard corals and aligned with international monitoring practices (e.g., NOAA NCRMP, AIMS LTMP, GCRMN).
 
-We will revise the paper to clarify this motivation.
+- **Optionally revise the title** to mention “hard corals,” depending on editorial policy at the camera-ready stage. We agree that this change could further improve clarity if permitted.
+
+We believe these updates will resolve any potential confusion regarding the dataset’s taxonomic scope.
+
+### 3. Clarifying Patch Extraction Protocol (§5.1)
+
+Each annotated point in ReefNet corresponds to a **centered square image patch of size 512×512 pixels**. This patch size was selected after pilot testing to balance local texture fidelity with sufficient spatial context for taxonomic classification.
+
+To improve clarity:
+- We will move this detail from §S3.1 to **§3.1 (Dataset Construction)** in the main paper.
+- We will explicitly reference the patch extraction process in **§5.1 (Benchmark Setup)**.
+- We will also update the **caption of Figure 4** to clarify that each sample shown corresponds to a centered patch around a labeled point.
+
+These updates will ensure the patch-based classification protocol is fully transparent and accessible to readers unfamiliar with CoralNet-derived workflows.
+
+### 4. Clarifying ReefNet vs. BenthicNet (Lines 90–94)
+
+We appreciate the reviewer’s feedback and agree that the comparison with BenthicNet (Lines 90–94) should be stated more clearly.
+
+**BenthicNet** is an important aggregation of diverse seafloor imagery sources, annotated using the **CATAMI substrate scheme**. However, its annotations are typically **image- or frame-level**, and label consistency varies across contributing datasets. Importantly, **no centralized quality control** or expert verification pipeline has been applied across the corpus. Its use of **WoRMS taxonomy is limited** and inconsistent across sources.
+
+In contrast, **ReefNet was purpose-built** for **genus-level, point-based hard coral classification**, with over **925K annotations** curated from expert-reviewed sources and **systematically mapped to WoRMS taxonomy**. ReefNet also includes:
+- A consistent **patch-level classification protocol**,
+- Rigorous **label filtering and expert verification** for ambiguous or inconsistent classes,
+- And two benchmarking splits (within-source, cross-source) for evaluating **domain generalization**—a critical challenge in ecological ML.
+
+While BenthicNet provides broader benthic coverage, **ReefNet fills a distinct and essential role** by offering **fine-grained, taxonomically standardized, and spatially localized coral classification benchmarks**.
+
+We view ReefNet as **complementary to BenthicNet** and are currently exploring the integration of **relevant hard-coral subsets from BenthicNet** into future versions of ReefNet, after applying **rigorous vetting and annotation verification** to ensure consistency with our taxonomic and quality standards.
+
+We will revise the manuscript to clearly reflect these distinctions and plans.
+
+### 5. Why WoRMS Instead of CATAMI
+
+We thank the reviewer for this important question. Our choice of WoRMS (World Register of Marine Species) over the CATAMI classification scheme is deliberate and aligned with our goal of **fine-grained, taxonomically accurate hard coral genus classification**.
+
+**Why WoRMS:**
+
+* WoRMS is the global taxonomic authority for marine species, offering **curated genus- and species-level identifiers (AphiaIDs)** that support taxonomic consistency and traceability across datasets. It enables **scientific reproducibility**, biodiversity modeling, and integration with major biological repositories such as OBIS, GenBank, and FathomNet (World Register of Marine Species Costello et al.).
+* The use of AphiaIDs ensures **persistent taxonomic mapping**, which is essential in ecological monitoring pipelines where names and classifications evolve.
+
+**Why CATAMI is not sufficient:**
+
+* The CATAMI classification scheme was designed for **coarse-grained habitat annotation**, organizing benthic imagery into broad biotic or substrate types (e.g., macroalgae, sand, generic coral). It emphasizes morphology over taxonomy and lacks genus-level resolution (CATAMI: The Collaborative and Automated Tools for Analysis of Marine Imagery Monk et al.).
+* It is widely used in habitat mapping but does not support the **granularity and taxonomic structure** needed for genus-level classification of Scleractinian corals.
+
+ReefNet’s design explicitly prioritizes **taxonomically grounded, point-level genus classification**, which is **not feasible with CATAMI**. While CATAMI remains valuable for general habitat mapping, **WoRMS uniquely supports the scientific objectives of ReefNet**.
+
+We will revise the manuscript to clearly explain this motivation and cite relevant taxonomic standards to support our choice.
 
 ### 6. Consistency of point placement + points per image
 
