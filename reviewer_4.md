@@ -20,7 +20,8 @@ We will revise Sections 3 and 5.1 to clearly state that:
 
 ### 2. Table 1 class counts
 
-We appreciate this suggestion and will update Table 1 to explicitly include the number of labeled classes in each dataset (where applicable), to better contextualize ReefNet’s fine-grained taxonomic resolution.
+We will revise Table 1 to explicitly include the **number of annotated classes** (species, genus, or family level, where available) for each dataset. This addition will help readers contextualize ReefNet’s fine-grained taxonomic resolution—particularly its focus on **genus-level hard coral classification**, which distinguishes it from broader or coarser habitat-level datasets. We believe this update will make the dataset comparison more informative and highlight the unique contribution of ReefNet in supporting detailed coral biodiversity modeling.
+
 
 ### 3. Lack of domain adaptation techniques
 
