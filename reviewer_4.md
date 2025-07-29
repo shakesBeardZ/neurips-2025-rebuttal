@@ -32,7 +32,14 @@ We appreciate the careful reading. We will correct any erroneous bold/underline 
 
 ### 7. Loss function parameters for class-balanced loss
 
-We used the implementation from Cui et al. (2019) with `β = 0.9999` and effective number-based reweighting. These settings will be added to the Supplementary Material for reproducibility.
+We thank the reviewer for this important point. In our loss function ablation (Table 4), we evaluated several standard and class-balanced variants. Below we detail the exact configurations used:
+
+* **Cross-Entropy Loss:** PyTorch’s default `nn.CrossEntropyLoss()`.
+* **Focal Loss:** We follow Lin et al. (ICCV 2017), using `γ = 2`, `α = 0.25`, as proposed in their RetinaNet paper for addressing class imbalance.
+* **Class-Balanced Cross-Entropy:** Based on Cui et al. (CVPR 2019), with `β = 0.9999`, using effective number-based reweighting.
+* **Class-Balanced Focal Loss:** Also based on Cui et al., using `β = 0.9999`, `γ = 2`.
+
+These settings were selected based on best practices from the literature and are now included in the Supplementary Material for full reproducibility. We appreciate the reviewer’s attention to detail, and we will make sure all loss configurations are clearly described in the final version.
 
 ### 8. Figure S9 confusion matrix
 
