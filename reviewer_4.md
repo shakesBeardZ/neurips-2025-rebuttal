@@ -41,17 +41,17 @@ We agree that **open-set recognition** is an important direction, particularly i
 
 That said, ReefNet includes many long-tailed or rarely sampled taxa in its metadata, making it a strong candidate for future open-set benchmarks. We will clarify these distinctions in the revised manuscript and cite Wang et al. (2024) to contextualize the importance of this direction.
 
-### 5. Macro-Recall vs. Balanced Accuracy
+### Additional Feedback Replies
 
-Thank you — we will clarify in Section 5 that our use of "Macro Recall" is equivalent to "Balanced Accuracy" and adopt the standard terminology.
+**a) Macro-Recall terminology**
+We appreciate the reviewer’s note. While “macro-recall” is a technically correct term reflecting the unweighted mean of per-class recall values, we acknowledge that “Balanced Accuracy” is the more widely recognized term in machine learning literature. We will revise the terminology throughout the paper and supplementary material for consistency with community standards.
 
-### 6. Table 4 highlighting errors
+**b) Highlighting inconsistencies in Table 4**
+Thank you for pointing this out. We will carefully revise Table 4 to ensure that only the **best-performing values per column are highlighted**. Any inconsistencies were purely formatting oversights and will be corrected in the camera-ready version to avoid confusion.
 
-We appreciate the careful reading. We will correct any erroneous bold/underline formatting in Table 4 to ensure all highlights correctly reflect the best and second-best values per column.
+**c) Loss function parameters for class-balanced loss**
 
-### 7. Loss function parameters for class-balanced loss
-
-We thank the reviewer for this important point. In our loss function ablation (Table 4), we evaluated several standard and class-balanced variants. Below we detail the exact configurations used:
+In our loss function ablation (Table 4), we evaluated several standard and class-balanced variants. Below, we detail the exact configurations used:
 
 * **Cross-Entropy Loss:** PyTorch’s default `nn.CrossEntropyLoss()`.
 * **Focal Loss:** We follow Lin et al. (ICCV 2017), using `γ = 2`, `α = 0.25`, as proposed in their RetinaNet paper for addressing class imbalance.
@@ -60,8 +60,7 @@ We thank the reviewer for this important point. In our loss function ablation (T
 
 These settings were selected based on best practices from the literature and are now included in the Supplementary Material for full reproducibility. We appreciate the reviewer’s attention to detail, and we will make sure all loss configurations are clearly described in the final version.
 
-### 8. Figure S9 confusion matrix
-
-You're absolutely right — Figure S9 mistakenly includes classes absent from the test set. We will correct the figure to only show evaluated classes, ensuring a consistent and interpretable confusion matrix.
+**d) Confusion matrix and absent classes in Figure S9**
+We agree that showing classes absent from the test set in the confusion matrix can be misleading. This occurred because the matrix was auto-generated using the full class list rather than filtered to match the test set. We will update Figure S9 to display only classes present during testing, ensuring that the matrix reflects meaningful confusion patterns and removing misleading zero-diagonal rows.
 
 We appreciate the reviewer’s thoughtful comments and are committed to implementing these improvements in the final version.
