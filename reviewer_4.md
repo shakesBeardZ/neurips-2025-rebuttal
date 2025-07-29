@@ -35,7 +35,11 @@ We will revise the methodological sections to clearly call out these augmentatio
 
 ### 4. Closed-set evaluation/lack of open-set recognition
 
-We agree that open-set recognition is an important frontier, especially in ecological settings where unseen classes are frequent. ReefNet’s current splits are **closed-set** by design to benchmark generalization across domains while holding the label set fixed. However, many rare classes are excluded from training but present in metadata. We plan to release an open-set split in future work. We thank the reviewer for referencing Wang et al. (2024), which we will cite and discuss in our revision.
+ReefNet’s current evaluation protocol is intentionally **closed-set**, designed to benchmark generalization across geographic domains while keeping the label space fixed. This allows for rigorous and reproducible comparisons across models and training regimes.
+
+We agree that **open-set recognition** is an important direction, particularly in ecological contexts where novel or rare taxa are frequently encountered. While our current setup does not include open-set evaluation in the formal sense (e.g., class rejection or novelty detection as discussed in *Dissecting out-of-distribution detection and open-set recognition Wang et al., 2024*), our **zero-shot vision-language experiments** (e.g., CLIP without fine-tuning) offer a step toward such generalization: models are evaluated without any ReefNet-specific supervision and rely solely on textual prompts.
+
+That said, ReefNet includes many long-tailed or rarely sampled taxa in its metadata, making it a strong candidate for future open-set benchmarks. We will clarify these distinctions in the revised manuscript and cite Wang et al. (2024) to contextualize the importance of this direction.
 
 ### 5. Macro-Recall vs. Balanced Accuracy
 
