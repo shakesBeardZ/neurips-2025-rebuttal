@@ -25,11 +25,15 @@ We will revise Table 1 to explicitly include the **number of annotated classes
 
 ### 3. Lack of domain adaptation techniques
 
-Thank you for this valuable suggestion. Our goal in this initial release was to benchmark **baseline performance** under domain shift using supervised and zero-shot models. Future work will include domain adaptation techniques (e.g., data augmentation, domain adversarial training), and we will mention this explicitly in the discussion.
+While our main aim was to establish **baseline generalization** under domain shift, we did incorporate **strong augmentation-based strategies** that serve as a form of *implicit domain adaptation*:
 
-We have also added augmentations (e.g., RandAugment, CutMix) in preliminary experiments, with moderate gains, which we plan to report in an extended version.
+* We applied a suite of augmentations—including **RandAugment**, **color jitter**, **horizontal flipping**, **Mixup**, **CutMix**, and **random erasing (reprob = 0.1)**—across all supervised and zero-shot experiments. This helped models generalize across visual variability typical of underwater reef imagery, such as lighting changes, turbidity, and structural diversity. (RandAugment: Practical automated data augmentation with a reduced search space, Cubuk et al.; CutMix: Regularization Strategy to Train Strong Classifiers with Localizable Features, Yun et al.)
+* Although these choices were listed in Supplementary §S3.1, we agree they should be clearly described in the main manuscript as explicit domain generalization strategies.
+* These augmentations yielded modest accuracy gains in cross-source evaluations, demonstrating their practical impact even in this initial benchmark.
 
-### 4. Closed-set evaluation / lack of open-set recognition
+We will revise the methodological sections to clearly call out these augmentation techniques as *domain-shift mitigation tools*, rather than mere preprocessing details. In the Discussion, we will outline future directions involving **explicit domain adaptation methods**—such as adversarial alignment or moment-based distribution matching—and highlight their potential applicability in coral imagery analysis.
+
+### 4. Closed-set evaluation/lack of open-set recognition
 
 We agree that open-set recognition is an important frontier, especially in ecological settings where unseen classes are frequent. ReefNet’s current splits are **closed-set** by design to benchmark generalization across domains while holding the label set fixed. However, many rare classes are excluded from training but present in metadata. We plan to release an open-set split in future work. We thank the reviewer for referencing Wang et al. (2024), which we will cite and discuss in our revision.
 
