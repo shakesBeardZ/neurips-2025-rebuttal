@@ -6,7 +6,17 @@ We thank the reviewer for their constructive feedback and positive evaluation. B
 
 ### 1. Clarification of task type (classification, detection, segmentation)
 
-ReefNet is designed for **point-based classification** — each sparse annotation corresponds to a single coral genus at a specific image location (not whole-image or per-pixel). The task is thus not detection or segmentation, but rather patch-level classification. We extract fixed-size patches (`224×224`) centered on annotation points. In cases where an image contains multiple genera, each point is treated independently with its own label. We will clarify this in Section 3 and 5.1.
+We appreciate the reviewer’s request for clarification regarding the nature of the task and how we handle images with multiple genera. Below is a detailed description:
+
+**Task Type: Patch-Level Classification (Not Detection or Segmentation)**  
+ReefNet adopts a **point-based classification** framework, where each annotation corresponds to a single coral genus at a specific spatial location—rather than to the entire image or to pixels. We extract **fixed-size patches (512×512 px)** centered on each annotation point. This patch size was selected after empirical evaluation to balance capturing both the broader coral structure and fine-grained texture, while minimizing background noise—a strategy common in reef imagery literature (e.g., *Sauder et al., Scalable semantic 3D mapping of coral reefs with deep learning*; *Shao et al., Deep learning for multi-label classification of coral conditions*; *Gómez-Ríos et al., Deep learning for multi-label classification of coral conditions*).
+
+When an image contains multiple genera, **each point is treated independently**. This means that multiple distinct patches may be extracted from a single image, each associated with its own genus label. This setup enables fine-grained, localized classification and naturally accommodates multi-genus scenes.
+
+We will revise Sections 3 and 5.1 to clearly state that:
+- Each patch is centered on a point annotation.
+- Classification is performed at the **patch level**, not over the full image or per pixel.
+- Images with multiple genera yield multiple labeled patches.
 
 ### 2. Table 1 class counts
 
