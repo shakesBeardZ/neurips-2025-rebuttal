@@ -111,12 +111,6 @@ ReefNet includes 925,322 point annotations across 181,046 images, with:
 - **Median**: 22 points/image  
 - **Range**: 25 to 180 points/image  
 
-These densities align with standard field protocols like:
-
-- **CPCe(Coral Point Count with Excel extensions)** (50-point coral quadrats)  
-- **RLS(Reef Life Survey)** (25-point assessments)  
-- **LTMP(Long-Term Monitoring Program)** (100-point stratified grids)  
-
 We summarize these statistics in Section 3.3 and Supplementary Fig. S1.
 
 **(iv) Metadata enables dataset auditing (not modeling)**  
@@ -143,7 +137,7 @@ We do **not assume that our experts are inherently “better”** than the origi
 
 - Taxonomic inconsistencies (e.g., mixed naming conventions),
 - Annotation noise (e.g., coarse or ambiguous labels),
-- Varying levels of verification across datasets.
+- Incorrect genus-level assignments (e.g., mislabeling of Acropora genus).
 
 These findings led us to initiate a **systematic expert-guided filtering process**, to raise label consistency, ecological fidelity, and taxonomic precision across ReefNet.
 
@@ -178,13 +172,18 @@ We will revise the manuscript to clearly communicate the intent and structure of
 
 ### 7. Data-access complexity (scripts + HuggingFace)
 
-To simplify access, we will package a `pip`-installable CLI tool that:
+We agree that the steps included in the process of downloading ReefNet data and reproducing what we have on the paper can be a bit of a headache, To simplify access, we will package a `pip`-installable CLI tool that:
 
-1. Downloads public CoralNet source images we curated
-2. Downloads annotations CSV
-3. Includes a Jupyter Notebook to reproduce both benchmark splits with two expert agreement levels
+1. Downloads public CoralNet sources images that were included in ReefNet study, the user will have control over which sources to include or exclude
+2. Downloads annotations CSV files from the ReefNet repository
+3. Commands to generate the two benchmark splits (`high_conf` and `mod_conf`) with expert agreement levels
+4. Includes a Jupyter Notebook to reproduce both benchmark splits with two expert agreement levels
+5. Provides a simple API to load the dataset via HuggingFace
+This will allow users to easily generate the splits and access the dataset without needing to manually download or process files.
+The CLI tool will be documented in the repository and will include examples for common use cases.
+This will allow users to easily generate the splits and access the dataset without needing to manually download or process files.
 
-The cross-source Al-Wajh split remains on HuggingFace for easy use via:
+The Al-Wajh dataset will be made available on HuggingFace:
 
 ```python
 datasets.load_dataset("reefnet/al-wajh")

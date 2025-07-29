@@ -33,7 +33,7 @@ To further clarify and demonstrate the transformative impact of ReefNet's curati
 
 We believe these critical enhancements and clarifications underscore the significance of ReefNet’s contributions, transforming fragmented image resources into a cohesive, reliable, and innovative benchmark for coral reef research.
 
-## 2. Domain‑specific text descriptions (*n = 40*) – small yet impactful
+## 2. Domain‑specific text descriptions (*n = 44*) – small yet impactful
 
 **(a) Why quality beats quantity for corals**
 Unlike birds—which exhibit stable, easily verbalized field marks such as plumage color and bill shape (cf. CUB‐200 attributes)—corals pose three unique challenges:
@@ -55,7 +55,6 @@ This mirrors broader VLM work showing that even *few but domain-tuned* descripti
 *Clarification in manuscript:*
 We will add two sentences to §4.1 explaining that the goal is *high-precision, domain-specific* prose rather than volume, and point to the observed zero-shot gains as evidence of effectiveness.
 
-
 ## 3. Why two expert–agreement splits? Balancing quantity & label fidelity
 
 To clarify, we intentionally created two splits based on expert agreement levels to balance dataset size with label accuracy, which enables several research and benchmarking opportunities:
@@ -64,14 +63,12 @@ To clarify, we intentionally created two splits based on expert agreement levels
 In ecological monitoring, expanding survey effort invariably introduces annotation noise (time pressure, varying expertise).
 Robust-learning research therefore *explicitly* evaluates models on pairs of *clean* vs. *noisy* subsets—e.g., COCO-N and Cityscapes-N for instance segmentation, FNBench for federated learning, and ViT noise-robustness studies.
 Our `High-conf` (92%) and `Mod-conf` (73%) splits serve the same purpose for coral imagery.
-
 **(b) Quantified trade-off**
 
 - `High-conf`: 118K images / 466K points — optimal for *benchmarking algorithms* where label precision is paramount.
 - `Mod-conf`: 181K images / 925K points — captures rarer genera and long-tail phenotypes, valuable for *pre-training or semi-supervised* setups.
 
 This mirrors the “clean/curated vs. large/unfiltered” dual-track adopted in many noisy-label studies.
-
 **(c) Research opportunities enabled**
 
 - *Noise-robust learning:* Train on `Mod-conf` and validate on `High-conf`—a standard protocol for methods like Pseudo-Loss Selection or SplitNet.
@@ -108,7 +105,6 @@ This mirrors other platforms like ReefCloud and CoralNet.
 
 **(e) Road-map to dense tasks**
 We release full-image tiles and point coordinates to enable weakly-supervised segmentation or object detection in future work.
-
 **(f) Manuscript edits**
 
 - Rename §3.1 to “Point–patch annotation protocol” and add schematic
@@ -127,9 +123,7 @@ Our policy follows best practices for mixed-provenance datasets:
   ReefNet *does not redistribute* CoralNet images. Instead, we provide:
 
   * A CSV with source URLs hosted on CoralNet
-  * A Python script to download them
-    CoralNet sources require Creative Commons licenses (e.g., CC-BY, CC-BY-NC, CC-BY-NC-SA).
-    We directly host only Al-Wajh (Red Sea) photos, released under `CC-BY-NC-SA 4.0`.
+  * A Python script to download them, CoralNet sources require Creative Commons licenses (e.g., CC-BY, CC-BY-NC, CC-BY-NC-SA).We directly host only Al-Wajh (Red Sea) photos on HuggingFace, released under `CC-BY-NC-SA 4.0`.
 
 - **Annotations & metadata:**
   `CC-BY-NC-SA 4.0` — allows free use for non-commercial purposes, with share-alike terms.

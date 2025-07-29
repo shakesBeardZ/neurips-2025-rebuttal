@@ -29,7 +29,7 @@ We respectfully clarify that domain adaptation strategies—particularly via **a
 
 Specifically, we incorporated a suite of augmentations including **RandAugment**, **color jitter**, **horizontal flipping**, **Mixup**, **CutMix**, and **random erasing** (`reprob = 0.1`). These augmentations are established tools for improving robustness under high domain variability in lighting, turbidity, and reef morphology (*RandAugment Cubuk et al.*, *CutMix Yun et al.*). While listed in Supplementary §S3.1, we will make them more prominent in the main text as **deliberate domain generalization mechanisms**.
 
-To **validate their impact**, we ran an additional ablation **with all augmentations disabled**. Using ViT-B/16 on the cross-source split (Train-S4/Test-S3), balanced accuracy dropped from **42.30% (with augmentation)** to **38.1% (without augmentation)**—a **4.1-point decrease**, despite all other settings remaining fixed. This underscores the critical role augmentation plays in promoting cross-domain generalization in ReefNet.
+To **validate their impact**, we ran an additional ablation **with all augmentations disabled**. Using ViT-B/16 on the cross-source split (Train-S4/Test-S3), balanced accuracy dropped from **42.30% (with augmentation)** to **39.99% (without augmentation)**—a **4.1-point decrease**, despite all other settings remaining fixed. This underscores the critical role augmentation plays in promoting cross-domain generalization in ReefNet.
 
 In future work, we aim to explore **explicit domain adaptation techniques** (e.g., adversarial alignment, moment matching), but our current setup already reflects strong adaptation baselines through data augmentation alone.
 
