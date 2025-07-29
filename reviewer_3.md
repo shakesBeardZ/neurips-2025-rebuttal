@@ -80,32 +80,50 @@ ReefNet’s design explicitly prioritizes **taxonomically grounded, point-level 
 
 We will revise the manuscript to clearly explain this motivation and cite relevant taxonomic standards to support our choice.
 
-### 6. Consistency of point placement + points per image
+### 6. Consistency of Point Placement, Annotation Density, and Bias Transparency
 
-We thank the reviewer for raising this important point. Sampling bias due to point placement is a well-known challenge in benthic ecology, where annotations are often influenced by the specific monitoring goals of each survey (e.g., targeting particular coral assemblages). To mitigate this, ReefNet is designed for global coverage and broad taxonomic representation, and we provide detailed metadata that supports transparent, bias-aware analysis. Specifically:
+Sampling bias from point-placement strategies is a known challenge in benthic ecology, often driven by specific monitoring goals (e.g., focusing on particular coral taxa or reef zones). While ReefNet models do **not use full-image context or sampling density directly**—since each annotation point is treated as an **independent patch-level sample**—we designed the dataset to maximize **transparency and reproducibility** in how those points were originally selected.
 
-**(i) Documented point-generation method:**
-Each ReefNet source includes a `point_method` field from CoralNet metadata specifying the sampling strategy: *simple-random* (51 sources), *stratified-random* (23 sources), or *uniform-grid* (2 sources). No source relies on purely manual (click-based) annotation, ensuring that point placement is both consistent and reproducible across sources.
+**(i) Explicit annotation method metadata**  
+Each ReefNet image includes a `point_method` tag exported from CoralNet, specifying how annotation points were seeded:
 
-**(ii) Manual refinement protocol:**
-Following automatic seeding, annotators routinely adjust point positions to avoid image edges, blurred regions, or irrelevant objects (e.g., sand, shadows). This is part of CoralNet\'s standard annotation procedure.
+- `simple-random` (51 sources)  
+- `stratified-random` (23 sources)  
+- `uniform-grid` (2 sources)  
 
-**(iii) Per-image annotation density:**
-ReefNet includes 925,322 annotations across 181,046 images, with a mean of 40 points/image and a median of 22. Densities range from 25 to 180 points/image—matching common survey protocols (e.g., 50-point CPCe, 25-point RLS).
+Crucially, CoralNet **does not support fully manual, clicked-from-scratch annotations**—ensuring a baseline consistency in point generation across all sources.
 
-**(iv) Bias mitigation:**
-Because sampling method and point density are logged per image, users can:
+**(ii) Standardized manual refinement**  
+After automated point placement, annotators may adjust point positions to avoid image artifacts (e.g., edges, shadows) or target specific coral structures more accurately. While this introduces minor subjectivity, it follows **established ecological annotation protocols** and improves label precision. Some upstream surveys may still focus on certain genera (e.g., Acropora reef flats), but this reflects ecological—not procedural—bias.
 
-* restrict analyses to specific methods (e.g., only stratified-random),
-* normalize point counts (e.g., downsample to 50 points/image),
-* incorporate point density as a covariate.
+**(iii) Annotation density statistics**  
+ReefNet includes 925,322 point annotations across 181,046 images, with:
 
-These strategies will be documented in Section 3.4 and Supplementary Fig. S5.
+- **Mean**: 40 points/image  
+- **Median**: 22 points/image  
+- **Range**: 25 to 180 points/image  
 
-**(v) Transparency and guidance:**
-We will expand Section 6 to explicitly discuss residual sampling bias and provide usage recommendations, following best practices from coral survey bias literature.
+These densities align with standard field protocols like:
 
-We hope this addresses the reviewer’s concern. ReefNet’s point-placement metadata and tools make it one of the most auditable and bias-aware benthic annotation datasets to date.
+- **CPCe(Coral Point Count with Excel extensions)** (50-point coral quadrats)  
+- **RLS(Reef Life Survey)** (25-point assessments)  
+- **LTMP(Long-Term Monitoring Program)** (100-point stratified grids)  
+
+We summarize these statistics in Section 3.3 and Supplementary Fig. S1.
+
+**(iv) Metadata enables dataset auditing (not modeling)**  
+While ReefNet does **not model** sampling pattern or density, we expose metadata such as `point_method` and point count per image to support downstream auditing. Users can optionally:
+
+- Filter by method (e.g., only stratified-random annotations)  
+- Restrict to consistent point densities  
+- Study metadata correlations with performance  
+
+This transparency supports robust secondary analyses without complicating the training pipeline.
+
+**(v) Clear limitations and recommendations**  
+We will expand Section 6 (Limitations) to explicitly discuss potential upstream bias and clarify that ReefNet’s strength lies in making such factors **auditable and filterable**. This positions ReefNet as one of the most **transparent and reproducible patch-level coral annotation datasets** currently available.
+
+We thank the reviewer for encouraging us to clarify these important design choices.
 
 ### 7. Expert filtering: protocol and qualifications (§3.1)
 
