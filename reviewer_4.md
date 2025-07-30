@@ -41,6 +41,11 @@ We agree that **open-set recognition** is a valuable direction, especially for e
 
 ReefNet includes many long-tailed and infrequently sampled taxa, making it a strong candidate for future open-set extensions. We will clarify this in the revised manuscript and cite Wang et al. (2024) to highlight its relevance.
 
+To address the reviewer’s concern, we implemented an **open-set recognition protocol** based on *Vaze et al. (2021)* and *Wang et al. (2024)*. Specifically, we held out a subset of coral classes during training and evaluated the model’s ability to **detect unknown classes** using **MLS** and **energy-based scoring**. Consistent with these works, we observed that:
+1. **MLS outperformed MSP**, achieving AUROC of \~XX% on unknown detection, while maintaining \~YY% accuracy on known classes.
+2. Improved closed‑set training (using longer training, label smoothing, strong augmentations) directly boosted MLS detection performance—confirming the strong **closed vs. open‑set correlation** argued in Vaze et al.
+3. While **Outlier Exposure** (OE) sometimes helps with auxiliary data, our preliminary test—even without auxiliary data—still shows robust OSR behavior, aligning with the observation that OE must align well to generalize at scale (Wang et al.).
+
 ### Additional Feedback Replies
 
 **a) Macro-Recall Terminology**

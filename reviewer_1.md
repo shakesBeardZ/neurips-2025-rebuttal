@@ -8,7 +8,9 @@ We also thank the reviewer for the critical feedback. Below, we address each of 
 
 ### **Limited Technical Novelty**
 
-We agree that this work does not introduce algorithmic novelty. This paper is dedicated to exploring the need for high-quality resources and proper evaluation in the field of hard coral classification. Based on that motivation, we curated this dataset and conducted exploratory experiments to fit within the *Datasets & Benchmarks* track, which explicitly values contributions that enable future algorithmic advances.
+We acknowledge that this work does not introduce new algorithms, and we agree that it is not the focus of our submission. This paper is submitted to the *Datasets and Benchmarks* track, which explicitly values high-quality resources and carefully designed evaluation protocols that facilitate future algorithmic progress.
+ReefNet addresses long-standing challenges in coral classification—particularly domain shift, label inconsistency, and fine-grained recognition—by providing a large-scale, taxonomically standardized, and expert-verified benchmark. Our within-source and cross-source evaluation protocols simulate real-world deployment scenarios and reveal clear gaps in current methods, thereby motivating new research on domain-adaptive and fine-grained classification models.
+Rather than proposing yet another method, our goal is to establish a robust foundation upon which future methods can be developed, tested, and compared. We believe this form of contribution is especially crucial in underrepresented domains like marine ecology, where high-quality, well-structured benchmarks are scarce but urgently needed
 
 ### **Strong Dependence on CoralNet**
 
