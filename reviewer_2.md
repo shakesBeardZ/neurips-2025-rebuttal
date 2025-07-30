@@ -22,63 +22,32 @@ CoralNet is primarily an annotation platform hosting thousands of independent im
 - **Geographical Novelty:**
   ReefNet uniquely includes 1,300 expert-verified images from Al-Wajh in the Red Sea, addressing a critical gap since this region is both ecologically important and understudied.
 
-- **Scalable Integration Pipeline:**
-  Our proposed standardization and validation pipeline has already successfully integrated additional coral datasets beyond CoralNet (e.g., Moorea Labeled Corals, Pacific Labeled Corals, BENTHOZ-2015, Coralscapes, RSMAS Coral Texture set, Global Reef Record panoramic imagery), demonstrating scalability and robustness.
-
 - **Future-proofing and Expansion:**
   ReefNet's framework is designed for ongoing growth, with active plans to integrate substantial institutional datasets (e.g., NOAA’s NCRMP, AIMS Long-Term Monitoring) following the same rigorous standards.
 
-**Visualization of Contributions:**
-To further clarify and demonstrate the transformative impact of ReefNet's curation process, we will enhance Section 3 with a before-and-after flow diagram and comparison table, clearly delineating the improvements and novelty introduced by ReefNet.
+- **Visualization of Contributions:**
+  To further clarify and demonstrate the transformative impact of ReefNet's curation process, we will enhance Section 3 with a before-and-after flow diagram and comparison table, clearly delineating the improvements and novelty introduced by ReefNet.
 
 We believe these critical enhancements and clarifications underscore the significance of ReefNet’s contributions, transforming fragmented image resources into a cohesive, reliable, and innovative benchmark for coral reef research.
 
-## 2. Domain‑specific text descriptions (*n = 44*) – small yet impactful
+## 2. The Limited Number of Text Descriptions
 
-**(a) Why quality beats quantity for corals**
-Unlike birds—which exhibit stable, easily verbalized field marks such as plumage color and bill shape (cf. CUB‐200 attributes)—corals pose three unique challenges:
+For the *Within-source Test-S2* and *Cross-source Test-S3&S4* splits, we have up to 39 unique hard coral genera. Each genus is associated with two distinct textual descriptions ("GPT" and "Book"), generated using the pipeline described in S6 and Section 5.3. While additional descriptions can be generated using the same pipeline—for example, for instruction fine-tuning—we restrict ourselves to these 39 for each of the "Qwen-GPT" and "Qwen-Book" experiments. This is because our goal is to evaluate inference-time performance without any additional training, where a single description per genus is sufficient. This setup allows us to demonstrate how such descriptions support the zero-shot performance of Qwen2.5-VL, as evidenced by the results discussed in Section 5.3.
 
-1. *Morphological plasticity:* colony form changes with depth, light, and flow
-2. *Convergent appearance:* unrelated genera can look nearly identical
-3. *Taxonomic instability & synonymy:* genera are frequently split or merged as genetics outpaces morphology
+## 3. Motivation for Expert Agreement Splits: Balancing Label Quality and Dataset Coverage
 
-Consequently, there is *no authoritative, large‐scale corpus* of non-conflicting coral descriptions—WoRMS itself provides only terse taxonomic notes.
+We agree that the motivation behind the expert-agreement-based splits could be more clearly explained and will revise Section 4 accordingly.
+As described in Section 3.3 and Table 2, ReefNet includes two quality tiers based on expert agreement thresholds during our re-verification procedure:
 
-**(b) Expert‑curated, conflict‑free prose**
-Our 40 paragraphs (80 words each) were distilled from FAO regional field guides and cross-checked against recent genetic–morphology reconciliation studies to avoid contradictory traits.
-Each text focuses on *growth form, corallite structure, and biogeography*—features most discriminative for vision–language alignment.
+- **Moderate-confidence subset (81% agreement):** Includes all source–genus pairs with at least 50% expert agreement, yielding broader coverage and greater diversity (803K annotations).
+- **High-confidence subset (92% agreement):** A stricter subset with only source–genus pairs achieving ≥70% expert agreement, resulting in 446K annotations with higher label reliability.
 
-**(c) Empirical evidence of utility**
-Using these descriptions as prompts boosts BioCLIP zero-shot macro-recall by **+6 pp** vs. generic ImageNet labels (Table 5).
-This mirrors broader VLM work showing that even *few but domain-tuned* descriptions outperform label-only baselines and attribute lists.
+For each subset, we define both a **within-source** and a **cross-source** split, allowing flexible benchmarking.
+In the **cross-source setup**, both training sets (Train-S3 and Train-S4) are evaluated on the same high-confidence test set (Test-S3\&S4), enabling a controlled comparison between training with **more data vs. cleaner labels**. This structure directly supports investigation into the tradeoff between dataset size and annotation fidelity in a real-world ecological setting.
 
-*Clarification in manuscript:*
-We will add two sentences to §4.1 explaining that the goal is *high-precision, domain-specific* prose rather than volume, and point to the observed zero-shot gains as evidence of effectiveness.
+As shown in Table 3 of the paper, this tradeoff is nuanced: in some cases, training on the larger moderate-confidence split yields better performance, while in others, the cleaner subset provides gains — especially for models more sensitive to label noise.
 
-## 3. Why two expert–agreement splits? Balancing quantity & label fidelity
-
-To clarify, we intentionally created two splits based on expert agreement levels to balance dataset size with label accuracy, which enables several research and benchmarking opportunities:
-
-**(a) Realistic noisy-label benchmarking**
-In ecological monitoring, expanding survey effort invariably introduces annotation noise (time pressure, varying expertise).
-Robust-learning research therefore *explicitly* evaluates models on pairs of *clean* vs. *noisy* subsets—e.g., COCO-N and Cityscapes-N for instance segmentation, FNBench for federated learning, and ViT noise-robustness studies.
-Our `High-conf` (92%) and `Mod-conf` (73%) splits serve the same purpose for coral imagery.
-**(b) Quantified trade-off**
-
-- `High-conf`: 118K images / 466K points — optimal for *benchmarking algorithms* where label precision is paramount.
-- `Mod-conf`: 181K images / 925K points — captures rarer genera and long-tail phenotypes, valuable for *pre-training or semi-supervised* setups.
-
-This mirrors the “clean/curated vs. large/unfiltered” dual-track adopted in many noisy-label studies.
-**(c) Research opportunities enabled**
-
-- *Noise-robust learning:* Train on `Mod-conf` and validate on `High-conf`—a standard protocol for methods like Pseudo-Loss Selection or SplitNet.
-- *Active curation:* Algorithms that identify or correct mislabeled samples can be benchmarked by measuring how many `Mod-conf` points they “upgrade” to `High-conf`.
-
-**(d) Manuscript clarification**
-We will add a three-sentence paragraph for the “Quality–Quantity Splits,” citing the relevant literature and reporting the exact image/point counts for each partition.
-A footnote will remind readers that `High-conf` is a proper subset of `Mod-conf`.
-
-These additions clarify that the dual-split design is *intentional*: it gives the community a built-in, ecology-specific test bed for the rapidly growing field of label-noise-robust machine learning.
+We will clarify this intent in the manuscript and explicitly note that the **high-confidence set is a filtered subset of the moderate-confidence set**. We appreciate the reviewer prompting us to strengthen the transparency of this benchmark design.
 
 ## 4. Multi-label nature of ReefNet and Fig. 4 clarification
 
