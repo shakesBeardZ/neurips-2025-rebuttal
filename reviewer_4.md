@@ -56,7 +56,6 @@ These results demonstrate that:
 * **Disabling any single augmentation** (e.g., `RandAug`, `ColorJitter`, `Random Erase`) results in a performance drop—showing that each plays a role in enhancing robustness.
 * **Training without augmentation** or with only a single augmentation significantly underperforms, validating that augmentation functions as an effective domain adaptation mechanism in our setup.
 
-
 #### **Planned Clarifications**
 
 We will:
