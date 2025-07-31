@@ -4,20 +4,30 @@
 
 We thank the reviewer for their constructive feedback and positive evaluation. Below, we address each concern in detail:
 
-### 1. Clarification of Task Type (Classification, Detection, Segmentation)
+### 1. Clarification of Task Type
+**(a) Patch-level, single-label classification**
+ReefNet follows the standard ecology workflow: each image is overlaid with *sparse points*. A fixed-size patch (512×512 px) is cropped around every point and assigned *one* genus label.
+A model performs *single-label* prediction *per patch*, not at the image level.
 
-We appreciate the request for clarification regarding the nature of the task and how we handle images with multiple genera.
+**(b) Why point-patch annotation (not bounding boxes or dense annotations)**
 
-**Task Type: Patch-Level Classification (Not Detection or Segmentation)**
-ReefNet adopts a **point-based classification** framework, where each annotation corresponds to a single coral genus at a specific spatial location—rather than to the entire image or to pixels. We extract **fixed-size patches (512×512 px)** centered on each annotation point. This patch size was selected after empirical evaluation to balance broader structural context and fine-grained texture, while minimizing background clutter—a strategy common in coral imagery research (e.g., *Scalable semantic 3D mapping of coral reefs with deep learning Sauder et al.*; *Deep learning for multi-label classification of coral conditions Shao et al.*; *Deep learning for multi-label classification of coral conditions Gómez-Ríos et al.*).
+- *Percent cover surveys:* Random-point annotation within images has been the standard practice in reef ecology for around 20 years, and CoralNet datasets are based on this approach.
+- *Annotation cost:* Full masks, bounding boxes, or dense annotations are much slower to annotate and labor-intensive. Automatic annotation tools also struggle due to the domain’s visual complexity.
 
-When an image contains multiple genera, **each point is treated independently**. This enables fine-grained, localized classification and is naturally suited to multi-genus images.
+ **(c) Image-level and patch-level multi-label support**  
+Each image contains many annotated points, so ReefNet is *multi-label at the image-level*, with an average of five different genera per image. Investigating patch-level samples with a patch size of 512×512 px, we found that fewer than 1.7% of patches contain more than one label. This becomes even more scarce after applying the different splits in the proposed benchmarks, where the in-source and cross-source test samples contain only 0.4% and 0.1% of patches with multiple labels, respectively. This scarcity limits the design and evaluation of patch-level multi-label classification in ReefNet, even in cases where multiple genera are present within the same image. In such cases, different genera typically appear in separate, individually labeled patches with the target genus in the center.
 
-We will revise Sections 3 and 5.1 to clearly state that:
+**(d) Road-map to dense masks**
+We release full-image tiles and point coordinates to enable weakly-supervised segmentation or object detection in future work.
+
+To clarify the task and avoid confusion, we will revise the abstract, the caption of Fig. 4, and the main text, and we will add a schematic illustrating how multiple patches originate from a single image (which contains an average of ~40 annotated points). Sections 3 and 5.1 will be updated to explicitly state that:
 
 * Each patch is centered on a point annotation.
 * Classification is performed at the **patch level**, not over the full image or per pixel.
 * Images with multiple genera yield multiple labeled patches.
+  
+We thank the reviewer again for raising this important point—also noted by Reviewer 3TBH. In our response to Reviewer 3TBH, we elaborate on an alternative multi-label classification setup. However, this is not applicable to the case of multiple genera appearing within the same patch. Addressing such cases would require dense annotations, which are not available in ReefNet and are necessary for quantitative evaluation or model development in this context.
+
 
 ### 2. Table 1 Class Counts
 
@@ -27,7 +37,7 @@ We will revise Table 1 to explicitly include the **number of annotated classes
 
 We would like to clarify that **our cross-domain experiments already include strong domain adaptation baselines via a diverse set of data augmentation strategies**, even though this was not emphasized sufficiently in the main paper.
 
-Specifically, we used a combination of **RandAugment**, **color jitter**, **horizontal flipping**, **Mixup**, **CutMix**, and **random erasing** (`reprob = 0.1`). These augmentations are widely used to improve generalization in the presence of domain shift due to variations in lighting, turbidity, and reef structure *(RandAugment, Cubuk et al.; CutMix, Yun et al.)*. While these are listed in Supplementary §S3.1, we will make this more prominent in the main text as part of our deliberate domain generalization design.
+Specifically, we used a combination of **RandAugment**, **color jitter**, **horizontal flipping**, **Mixup**, **CutMix**, and **random erasing** (`reprob = 0.1`). These augmentations are widely used to improve generalization in the presence of domain shift due to variations in lighting, turbidity, and reef structure *(RandAugment, Cubuk et al.; CutMix, Yun et al.)*. While these are listed in Supplementary S3.1, we will make this more prominent in the main text as part of our deliberate domain generalization design.
 
 #### **Augmentation Ablation Results**
 
@@ -60,8 +70,8 @@ These results demonstrate that:
 
 We will:
 
-* **Expand Section §5.1** to explicitly list our augmentation pipeline and reference it as a form of domain generalization.
-* **Mention this ablation in Supplementary §S3.1**, and optionally include a brief summary in the main paper if space permits.
+* **Expand Section 5.1** to explicitly list our augmentation pipeline and reference it as a form of domain generalization.
+* **Mention this ablation in Supplementary S3.1**, and optionally include a brief summary in the main paper if space permits.
 
 ### 4. Closed-Set Evaluation and Open‑Set Recognition
 
@@ -113,7 +123,7 @@ In our loss function ablation (Table 4), we evaluated several class-balanced a
 * **Class-Balanced Cross-Entropy**: `β = 0.9999` with effective number reweighting (*Class-Balanced Loss Based on Effective Number of Samples Cui et al.*)
 * **Class-Balanced Focal Loss**: `β = 0.9999`, `γ = 2` (Cui et al.)
 
-These configurations are now included in the Supplementary Material for full reproducibility.
+These configurations will be included in the Supplementary Material.
 
 **d) Confusion Matrix and Absent Classes in Figure S9**
 We agree that showing zero-diagonal classes can be misleading. This occurred due to auto-generation with the full class list. We will update Figure S9 to include only classes present in the test set, so the matrix accurately reflects true confusion patterns.
