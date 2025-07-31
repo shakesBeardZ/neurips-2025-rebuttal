@@ -25,7 +25,7 @@ CoralNet is primarily an annotation platform hosting thousands of independent im
 - **Future-proofing and Expansion:**
   ReefNet's framework is designed for ongoing growth, with active plans to integrate substantial institutional datasets (e.g., NOAA’s NCRMP, AIMS Long-Term Monitoring) following the same rigorous standards.
 
-We believe these critical enhancements and clarifications underscore the significance of ReefNet’s contributions, transforming fragmented image resources into a cohesive, reliable, and innovative benchmark for coral reef research.
+We believe these critical enhancements and clarifications underscore the significance of ReefNet’s contributions, transforming fragmented image resources into a cohesive and reliable benchmark for coral reef research.
 
 ## 2. The Limited Number of Text Descriptions
 
@@ -34,7 +34,7 @@ For the *Within-source Test-S2* and *Cross-source Test-S3&S4* splits, we have up
 ## 3. Motivation for Expert Agreement Splits: Balancing Label Quality and Dataset Coverage
 
 We agree that the motivation behind the expert-agreement-based splits could be more clearly explained and will revise Section 4 accordingly.
-As described in Section 3.3 and Table 2, ReefNet includes two quality tiers based on expert agreement thresholds during our re-verification procedure:
+As described in Section 3.4 and Table 2, ReefNet includes two quality tiers based on expert agreement thresholds during our re-verification procedure:
 
 - **Moderate-confidence subset (81% agreement):** Includes all source–genus pairs with at least 50% expert agreement, yielding broader coverage and greater diversity (803K annotations).
 - **High-confidence subset (92% agreement):** A stricter subset with only source–genus pairs achieving ≥70% expert agreement, resulting in 446K annotations with higher label reliability.
@@ -42,16 +42,16 @@ As described in Section 3.3 and Table 2, ReefNet includes two quality tiers base
 For each subset, we define both a **within-source** and a **cross-source** split, allowing flexible benchmarking.
 In the **cross-source setup**, both training sets (Train-S3 and Train-S4) are evaluated on the same high-confidence test set (Test-S3\&S4), enabling a controlled comparison between training with **more data vs. cleaner labels**. This structure directly supports investigation into the tradeoff between dataset size and annotation fidelity in a real-world ecological setting.
 
-As shown in Table 3 of the paper, this tradeoff is nuanced: in some cases, training on the larger moderate-confidence split yields better performance, while in others, the cleaner subset provides gains — especially for models more sensitive to label noise.
+As shown in Table 3, this trade-off is nuanced: for most models, the larger moderate-confidence split yields better performance. A similar trend was observed when testing on the Al-Wajh data (Test-W).
 
 We will clarify this intent in the manuscript and explicitly note that the **high-confidence set is a filtered subset of the moderate-confidence set**. We appreciate the reviewer prompting us to strengthen the transparency of this benchmark design.
 
-## 4. Multi-label nature of ReefNet and Fig. 4 clarification
+## 4. Single-label Nature of ReefNet and Fig. 4 Clarification
 **(a) Patch-level, single-label classification**
 ReefNet follows the standard ecology workflow: each image is overlaid with *sparse points*. A fixed-size patch (512×512 px) is cropped around every point and assigned *one* genus label.
 A model performs *single-label* prediction *per patch*, not at the image level.
 
-**(b) Why Fig. 4 looked confusing**
+**(b) Fig. 4 confusion**
 The figure presents example **patches**, each labeled based only on the **center point**, which is where the annotation was made. However, multiple objects may appear within the same patch — as seen in the rightmost example. However, the dataset does not support multi-label annotations, a limitation we highlight in the next point.
 
 To remove ambiguity in Fig. 4 we will:
@@ -72,7 +72,7 @@ We release full-image tiles and point coordinates to enable weakly-supervised se
 
 **(f) Hierarchical classification as a multi-label experiment**
 
-An alternative to single-label genus classification is to use both genus-level and family-level labels for the same annotated point (note: all hard coral samples share the same order-level taxonomy). To explore this, we trained a ViT model with two classification heads—one for genus and one for family—on thecross-source benchmark (Train-S4 → Test-S3&S4). 
+An alternative to single-label genus classification is to use both genus-level and family-level labels for the same annotated point (note: all hard coral samples share the same order-level taxonomy). To explore this, we trained a ViT model with two classification heads—one for genus and one for family—on the cross-source benchmark (Train-S4 → Test-S3&S4). 
 We refer to the model with two heads as *ViT-2Head*, and to its two outputs as *ViT-2Head-Genus* and *ViT-2Head-Family*. The baseline model with a single genus head is referred to as *ViT-Genus*. Interestingly, *ViT-2Head* improved genus classification performance by more than **2%**.
 
 Since there is a one-to-one mapping from genus to family, we also evaluated family-level classification using two approaches:
@@ -155,5 +155,5 @@ Remove doubled space before “41%”
 
 ## **Concluding Remark**
 
-With these clarifications and edits, we believe ReefNet offers a transparent, license-compliant, and uniquely rigorous benchmark for multi-label, out-of-distribution coral reef image analysis.
+With these clarifications and edits, we believe ReefNet offers a transparent, license-compliant, and rigorous benchmarks for single-label, in-distribution, and out-of-distribution hard coral classification analysis.
 We again thank the reviewer for their valuable feedback.
