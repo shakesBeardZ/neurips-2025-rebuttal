@@ -74,6 +74,35 @@ Each image contains many annotated points, so ReefNet is *multi-label at the ima
 **(e) Road-map to dense masks**
 We release full-image tiles and point coordinates to enable weakly-supervised segmentation or object detection in future work.
 
+**(f) Hierarchical classification as a multi-label experiment**
+
+An alternative to single-label genus classification is to leverage both genus-level and family-level labels for the same annotated point (note: all hard coral samples share the same order-level taxonomy). To explore this, we trained a ViT model with two classification heads—one for genus and one for family—on the cross-source benchmark (Train-S4, Test-S3&S4). 
+We refer to the model with two heads as *ViT-2Head*, and to its two outputs as *ViT-2Head-Genus* and *ViT-2Head-Family*. The baseline model with a single genus head is referred to as *ViT-Genus*. Interestingly, *ViT-2Head* improved genus classification performance by more than **2%**.
+
+Since there is a one-to-one mapping from genus to family, we also evaluated family-level classification using two approaches:
+- **ViT-2Head-Family**: Direct prediction using the model's family head.
+- **ViT-Genus & ViT-2Head-Genus**: Indirect prediction by mapping predicted genus labels to their corresponding families.
+
+This table summarizes the results:
+| Model              | Genus Classification Macro Recall | Family Classification Macro Recall |
+|--------------------|------------------------------------|-------------------------------------|
+| ViT-Genus          | 42.30                             | 52.82                              |
+| ViT-2Head-Genus    | 44.70                             | 54.33                              |
+| ViT-2Head-Family   | N/A                               | 53.74                              |
+
+
+Further, we examined the performance on 
+- [Genera: Astreopora - Family: Acroporidae] (common)
+- [Genera: Echinopora - Family: Merulinidae] (less common)
+- [Genera: Echinophyllia - Family: Lobophylliidae] (less common)
+
+The ViT-2Head improved the overall performance, but we didn't notice a special pattern or improvement, also we didn't notice improvements on rare genera.
+Model (column): ViT-Genus, ViT-2Head
+Class: [Genera: Astreopora, Family: Acroporidae], [Genera: Echinopora, Family: Merulinidae], [Genera: Echinophyllia, Family: Lobophylliidae]
+Recall ViT-Genus: [23.53 - 98.54], [4.44 - 45.71], [15.63 - 45.58]
+Recall ViT-2Head: [5.88 - 98.39], [26.67 - 89.42], [10.42 - 46.05]
+
+
 ## 5. Licensing of data, images, and code
 
 We appreciate the reviewer’s suggestion and will declare licensing terms in the “Data Availability” section, `LICENSE` files, and GitHub `README`.
