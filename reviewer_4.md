@@ -1,7 +1,3 @@
-# neurips-2025-rebuttal
-
-## Reply to Reviewer 2iCx
-
 We thank the reviewer for their constructive feedback and positive evaluation. Below, we address each concern in detail:
 
 ### 1. Clarification of Task Type
@@ -11,14 +7,15 @@ A model performs *single-label* prediction *per patch*, not at the image level.
 
 **(b) Why point-patch annotation (not bounding boxes or dense annotations)**
 
-- *Percent cover surveys:* Random-point annotation within images has been the standard practice in reef ecology for around 20 years, and CoralNet datasets are based on this approach.
+- *Percent cover surveys:* Random-point annotation has long been standard in reef ecology, and CoralNet datasets are based on this approach.
 - *Annotation cost:* Full masks, bounding boxes, or dense annotations are much slower to annotate and labor-intensive. Automatic annotation tools also struggle due to the domain’s visual complexity.
 
- **(c) Image-level and patch-level multi-label support**  
-Each image contains many annotated points, so ReefNet is *multi-label at the image-level*, with an average of five different genera per image. Investigating patch-level samples with a patch size of 512×512 px, we found that fewer than 1.7% of patches contain more than one label. This becomes even more scarce after applying the different splits in the proposed benchmarks, where the in-source and cross-source test samples contain only 0.4% and 0.1% of patches with multiple labels, respectively. This scarcity limits the design and evaluation of patch-level multi-label classification in ReefNet, even in cases where multiple genera are present within the same image. In such cases, different genera typically appear in separate, individually labeled patches with the target genus in the center.
+ **(c) Image-level and patch-level multi-label support** 
+Each image contains many annotated points, so ReefNet is *multi-label at the image-level*, with an average of five different genera per image. Investigating patch-level samples with a patch size of 512×512 px, we found that fewer than 1.7% of patches contain more than one label. This drops to just 0.4% (in-source) and 0.1% (cross-source) in our benchmarks of patches with multiple labels, respectively. This scarcity limits the design and evaluation of patch-level multi-label classification in ReefNet, even in cases where multiple genera are present within the same image. In such cases, different genera typically appear in separate, individually labeled patches with the target genus in the center.
 
 **(d) Road-map to dense masks**
-We release full-image tiles and point coordinates to enable weakly-supervised segmentation or object detection in future work.
+
+We provide full-image tiles and coordinates for future weakly supervised tasks.
 
 To clarify the task and avoid confusion, we will revise the abstract, the caption of Fig. 4, and the main text, and we will add a schematic illustrating how multiple patches originate from a single image (which contains an average of ~40 annotated points). Sections 3 and 5.1 will be updated to explicitly state that:
 
@@ -32,6 +29,8 @@ We thank the reviewer again for raising this important point—also noted by Rev
 ### 2. Table 1 Class Counts
 
 We will revise Table 1 to explicitly include the **number of annotated classes** (species, genus, or family level, where available) for each dataset. This update will significantly improve the interpretability of the dataset comparison and reinforce ReefNet’s role in supporting fine-grained coral classification.
+
+We will update Table 1 with class counts. Summarized: CoralNet lacks unified taxonomy; CoralSCOP and CoralVOS provide binary masks only; MosaicsUCSD includes ~13 species; Eilat, 8 genera; BenthicNet has inconsistent species-level labels; and Coralscapes lacks explicit taxonomy.
 
 ### 3. Domain Adaptation and Augmentation Strategies
 
@@ -118,7 +117,7 @@ We appreciate this observation. We will correct the formatting in Table 4 to e
 **c) Loss Function Parameters**
 In our loss function ablation (Table 4), we evaluated several class-balanced and standard variants. Below are the exact settings:
 
-* **Cross-Entropy Loss**: PyTorch `nn.CrossEntropyLoss()`
+* **CE Loss**: PyTorch `nn.CrossEntropyLoss()`
 * **Focal Loss**: `γ = 2`, `α = 0.25` (as in *Focal Loss for Dense Object Detection Lin et al.*)
 * **Class-Balanced Cross-Entropy**: `β = 0.9999` with effective number reweighting (*Class-Balanced Loss Based on Effective Number of Samples Cui et al.*)
 * **Class-Balanced Focal Loss**: `β = 0.9999`, `γ = 2` (Cui et al.)
@@ -126,4 +125,4 @@ In our loss function ablation (Table 4), we evaluated several class-balanced a
 These configurations will be included in the Supplementary Material.
 
 **d) Confusion Matrix and Absent Classes in Figure S9**
-We agree that showing zero-diagonal classes can be misleading. This occurred due to auto-generation with the full class list. We will update Figure S9 to include only classes present in the test set, so the matrix accurately reflects true confusion patterns.
+We’ll update Figure S9 to show only classes present in the test set.
