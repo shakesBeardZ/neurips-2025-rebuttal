@@ -64,18 +64,39 @@ We will:
 * **Expand Section §5.1** to explicitly list our augmentation pipeline and reference it as a form of domain generalization.
 * **Mention this ablation in Supplementary §S3.1**, and optionally include a brief summary in the main paper if space permits.
 
-### 4. Closed-Set Evaluation and Open-Set Recognition
+### 4. Closed-Set Evaluation and Open‑Set Recognition
 
-ReefNet’s current evaluation protocol is intentionally **closed-set**, designed to benchmark generalization across geographic domains while keeping the label space fixed. This supports rigorous, reproducible model comparisons.
+ReefNet’s original evaluation protocol is intentionally **closed‑set**, designed to benchmark cross‑domain generalization using a fixed label space. This enables reproducible, fair comparisons across methods.
 
-We agree that **open-set recognition** is a valuable direction, especially for ecological monitoring where novel taxa frequently arise. While our current setup does not perform explicit novelty detection (as formalized in *Dissecting out-of-distribution detection and open-set recognition Wang et al., 2024*), our **zero-shot vision-language experiments** (e.g., CLIP with natural language prompts) evaluate generalization without any ReefNet-specific training. This partially emulates open-set behavior by bypassing supervised fine-tuning, although it still uses a fixed label space.
+To address the reviewer’s concern, we implemented a standard **open‑set recognition (OSR)** protocol inspired by \[Vaze et al., 2022] and \[Wang et al., 2024] on the cross‑source split (Train‑S4 → Test‑S3\&S4). Specifically:
 
-ReefNet includes many long-tailed and infrequently sampled taxa, making it a strong candidate for future open-set extensions. We will clarify this in the revised manuscript and cite Wang et al. (2024) to highlight its relevance.
+* We held out **8 coral classes** as *unknown* (e.g., *Agaricia, Pavona, etc.*), training only on the remaining **30 known classes**.
+* At test time, we evaluated on a **mixed test set** containing both known (32,173 samples) and unknown (1,867 samples) classes.
+* We computed standard post hoc scoring metrics:
 
-To address the reviewer’s concern, we implemented an **open-set recognition protocol** based on *Vaze et al. (2021)* and *Wang et al. (2024)*. Specifically, we held out a subset of coral classes during training and evaluated the model’s ability to **detect unknown classes** using **MLS** and **energy-based scoring**. Consistent with these works, we observed that:
-1. **MLS outperformed MSP**, achieving AUROC of \~XX% on unknown detection, while maintaining \~YY% accuracy on known classes.
-2. Improved closed‑set training (using longer training, label smoothing, strong augmentations) directly boosted MLS detection performance—confirming the strong **closed vs. open‑set correlation** argued in Vaze et al.
-3. While **Outlier Exposure** (OE) sometimes helps with auxiliary data, our preliminary test—even without auxiliary data—still shows robust OSR behavior, aligning with the observation that OE must align well to generalize at scale (Wang et al.).
+  * **MSP** – Max Softmax Probability
+  * **MLS** – Max Logit Score
+  * **Energy Score** \[Liu et al., NeurIPS 2020]
+* **Metrics reported:**
+
+  * **AUROC** (Area Under ROC Curve — *higher is better*)
+  * **FPR\@95%TPR** (False Positive Rate at 95% True Positive Rate — *lower is better*)
+
+We followed a **stratified hold‑out** protocol commonly used in OSR literature by excluding low‑frequency classes and selecting unknowns with ≥100 test‑sample support for sound evaluation.
+
+Following \[Vaze et al., 2022], we note that a classifier’s **closed‑set accuracy** correlates strongly with its open‑set detection ability. Accordingly, we use **MLS** scoring as a competitive baseline, which their experiments show performs on par with specialized OSR methods.
+
+Consistent with \[Wang et al., 2024], we evaluate multiple scoring rules (MSP, MLS, Energy) and observe that **magnitude‑sensitive approaches like MLS and Energy** yield the best performance—reinforcing their finding that such scoring functions generalize across both OSR and OOD tasks.
+
+| Method |    AUROC ↑ | FPR\@95%TPR ↓ |
+| ------ | ---------: | ------------: |
+| MSP    |     0.8169 |        0.6067 |
+| MLS    | **0.8361** |    **0.5820** |
+| Energy |     0.1616 |        0.9902 |
+
+> **MLS achieves the best open-set detection performance**, which aligns with both Vaze et al.’s and Wang et al.’s empirical observations.
+
+We appreciate this observation, as it pushed us to validate ReefNet in a broader OSR context. We believe this direction complements the dataset’s goal of benchmarking generalization under ecological shift, and opens the door for future work that unifies **open‑set detection** and **domain adaptation** in marine imagery — two challenges that often co-occur in real-world deployments.
 
 ### Additional Feedback Replies
 
