@@ -3,7 +3,7 @@
 We sincerely thank the reviewer for their thorough assessment and constructive comments.
 In the following, we address each concern in turn. For clarity, we organize our reply into numbered headings that mirror the points of the reviewer.
 
-## 1. Novelty beyond *“just CoralNet”*
+## 1. Novelty beyond *CoralNet*
 
 **Clarification on CoralNet's Nature:**
 CoralNet is primarily an annotation platform hosting thousands of independent image sets ("sources") contributed by different research groups, each with its own labeling conventions and quality standards. It does not constitute a standardized or harmonized dataset suitable for benchmarking.
