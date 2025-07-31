@@ -1,195 +1,189 @@
-# neurips-2025-rebuttal
-
-## Reply to the Third Reviewer ue6z 
-
 We thank the reviewer for the detailed critique and address each weakness or editorial note in turn.
 
 ### 1. Clarifying Annotation Type and Dataset Scope in Abstract and Title
 
-We agree that the original abstract could more explicitly describe both the **annotation format** and the **taxonomic focus** of the ReefNet dataset.
+We agree the abstract should more clearly reflect both the **annotation format** and the **taxonomic scope** of ReefNet.
 
-#### (i) Annotation Type (Point-Based Classification)
+#### (i) Annotation Type
 
-While the current abstract mentions “genus-level hard-coral annotations,” it does not specify that these annotations are:
+We will revise the abstract to explicitly state that annotations are:
 
-* **Sparse point-level labels**, and
-* Used for **localized patch-based classification** rather than whole-image or per-pixel labeling.
+- **Sparse point-level labels**, used for
+- **Patch-based classification** (not segmentation or detection)
 
-To improve clarity, we will revise the sentence:
+We propose changing:
 
-> “...totaling ∼925K genus-level hard-coral annotations with expert-verified labels.”
+> “...∼925K genus-level hard-coral annotations...”
 
 to:
 
-> “...totaling ∼925K **sparse point-level genus annotations**, supporting localized **patch-level classification** with expert-verified labels.”
+> “...∼925K **point-level genus annotations**, supporting **localized patch classification**...”
 
-This update removes ambiguity about the nature of the task (classification) and annotation granularity (point-based), helping readers distinguish ReefNet from detection or segmentation datasets.
+We hope This clarifies both task type and annotation granularity.
 
-#### (ii) Scope: Hard Corals Only
+#### (ii) Hard Coral–Only Scope
 
-ReefNet focuses **exclusively on hard corals (Order: Scleractinia)** — the most ecologically foundational and taxonomically structured group in global reef surveys. Although other benthic organisms (e.g., algae, soft corals, sponges) may appear in the imagery, they are **explicitly excluded** from ReefNet’s label set.
+ReefNet focuses **exclusively on hard corals (Order: Scleractinia)**. Other benthic taxa (e.g., soft corals, algae) are visible but deliberately excluded from the label set, reflecting the dataset’s ecological focus and the expertise of our verification team.
 
-This reflects both:
+We will revise the abstract to:
 
-* The dataset’s **targeted ecological scope**, and
-* The taxonomic expertise of our verification team, which specializes in hard coral identification and labeling.
+> “…∼925K point-level annotations of **hard coral genera**, excluding other benthic taxa…”
 
-To avoid confusion, we will revise the abstract to:
-
-> “…totaling ∼925K **point-level annotations of hard coral genera**, excluding other benthic taxa…”
-
-We will also clarify ReefNet’s scope in **Section 1 (Introduction)** and **Section 3 (Dataset)**, and if permitted, we are open to **updating the paper’s title** to explicitly include “hard corals.”
-
-These changes ensure that readers — whether from machine learning or ecology backgrounds — clearly understand the dataset’s annotation type and taxonomic boundaries from the outset.
+We will clarify this scope in **Sections 1 and 3**, and are open to adding “hard corals” to the title.
 
 ### 2. Clarifying Patch Extraction Protocol (§5.1)
 
-Thank you for raising this point. In ReefNet, each annotated point corresponds to a **512×512 pixel patch**, carefully centered on the point label. We selected this size through **extensive pilot testing**—evaluating patch sizes of 224×224, 448×448, and 512×512—to balance **local texture detail** with broader spatial context for accurate genus-level identification.
+Each ReefNet annotation is centered in a **512×512 pixel patch**, used for **patch-level classification**. This size was chosen after testing 224×224, 448×448, and 512×512 options to balance local detail and spatial context.
 
-Notably, the **224×224 pixel size** is the default convention used by CoralNet and is standard in many coral classification studies *(A New Deep Learning Engine for CoralNet, Beijbom et al.)*, *(Coral Image Patch Classification with Deep CNNs, Williams et al.)*, *(Towards Automatic Coral Reef Benthic Composition Estimation, Vega et al.)*. However, our experiments showed that using 512×512 produced a **+8% macro recall improvement**.
+224×224 is standard in CoralNet and prior studies (Beijbom et al.; Williams et al.; Vega et al.), but 512×512 improved macro recall by **+8%**.
 
-To enhance clarity and reproducibility:
-- We will move this information from §S3.1 to **§3.1 (Dataset Construction)** in the main paper.
-- We will explicitly reference the patch size and extraction procedure in **§5.1 (Benchmark Setup)**.
-- We will update the **caption of Figure 4** to note that each image corresponds to a 512×512-centered patch around a point.
+To improve clarity:
+- We will move this detail from §S3.1 to **§3.1** (main paper)
+- Mention patch extraction in **§5.1**
+- Update **Figure 4 caption** to state that patches are centered 512×512 patches
 
-These changes will make our patch-based approach fully transparent, aligning ReefNet’s preprocessing choices with both ecological relevance and reader expectations.
+These edits ensure transparency in our patch-based pipeline and evaluation.
 
+### 3. Clarifying ReefNet vs. BenthicNet (Lines 90–94)
 
-### 3. Clarifying ReefNet vs. BenthicNet (Lines 90–94)
+We agree the distinction between ReefNet and BenthicNet should be clearer.
 
-We appreciate the reviewer’s feedback and agree that the comparison with BenthicNet (Lines 90–94) should be stated more clearly.
+**BenthicNet** aggregates diverse seafloor imagery annotated at the **image/frame level**, primarily using the **CATAMI scheme**. It lacks **centralized quality control**, and its use of **WoRMS taxonomy is inconsistent**. Annotations vary in format and taxonomic granularity across sources.
 
-**BenthicNet** is an important aggregation of diverse seafloor imagery sources, annotated using the **CATAMI substrate scheme**. However, its annotations are typically **image- or frame-level**, and label consistency varies across contributing datasets. Importantly, **no centralized quality control** or expert verification pipeline has been applied across the corpus. Its use of **WoRMS taxonomy is limited** and inconsistent across sources.
+In contrast, **ReefNet is purpose-built** for **point-based, genus-level hard coral classification**, with over **925K annotations**:
+- Consistently **mapped to WoRMS** taxonomy,
+- Backed by **expert verification** (raising agreement from 73% to 92%),
+- Structured for **patch-based benchmarking** with standardized within- and cross-source splits.
 
-In contrast, **ReefNet was purpose-built** for **genus-level, point-based hard coral classification**, with over **925K annotations** curated from expert-reviewed sources and **systematically mapped to WoRMS taxonomy**. ReefNet also includes:
-- A consistent **patch-level classification protocol**,
-- Rigorous **label filtering and expert verification** for ambiguous or inconsistent classes,
-- And two benchmarking splits (within-source, cross-source) for evaluating **domain generalization**—a critical challenge in ecological ML.
+While BenthicNet offers broad habitat coverage, **ReefNet addresses the need for fine-grained, taxonomically standardized, and ML-ready coral benchmarks**.
 
-While BenthicNet provides broader benthic coverage, **ReefNet fills a distinct and essential role** by offering **fine-grained, taxonomically standardized, and spatially localized coral classification benchmarks**.
-
-We view ReefNet as **complementary to BenthicNet** and are currently exploring the integration of **relevant hard-coral subsets from BenthicNet** into future versions of ReefNet, after applying **rigorous vetting and annotation verification** to ensure consistency with our taxonomic and quality standards.
-
-We will revise the manuscript to clearly reflect these distinctions and plans.
+We will revise the manuscript to clarify this distinction and note that we are exploring the future integration of hard coral subsets from BenthicNet—pending annotation verification and quality alignment.
 
 ### 4. Why WoRMS Instead of CATAMI
 
-We thank the reviewer for this important question. Our choice of WoRMS (World Register of Marine Species) over the CATAMI classification scheme is deliberate and aligned with our goal of **fine-grained, taxonomically accurate hard coral genus classification**.
+Our use of **WoRMS** (World Register of Marine Species) over **CATAMI** is a deliberate decision aligned with ReefNet’s goal of **fine-grained, taxonomically consistent genus-level classification of hard corals**.
 
-**Why WoRMS:**
+#### Why WoRMS?
 
-* WoRMS is the global taxonomic authority for marine species, offering **curated genus- and species-level identifiers (AphiaIDs)** that support taxonomic consistency and traceability across datasets. It enables **scientific reproducibility**, biodiversity modeling, and integration with major biological repositories such as OBIS, GenBank, and FathomNet (World Register of Marine Species Costello et al.).
-* The use of AphiaIDs ensures **persistent taxonomic mapping**, which is essential in ecological monitoring pipelines where names and classifications evolve.
+- WoRMS is the **global standard for marine species nomenclature**, widely adopted across marine biology, ecology, and biodiversity informatics (*Costello et al.*).
+- It provides persistent genus/species identifiers (**AphiaIDs**) that support **long-term traceability, scientific reproducibility**, and integration with repositories like **OBIS, GenBank, and FathomNet**.
+- Unlike image-only schemes, WoRMS integrates taxonomy based on **morphological and genetic analysis of physical specimens**, ensuring accuracy and scientific validity.
 
-**Why CATAMI is not sufficient:**
+#### Why not CATAMI?
 
-* The CATAMI classification scheme was designed for **coarse-grained habitat annotation**, organizing benthic imagery into broad biotic or substrate types (e.g., macroalgae, sand, generic coral). It emphasizes morphology over taxonomy and lacks genus-level resolution (CATAMI: The Collaborative and Automated Tools for Analysis of Marine Imagery Monk et al.).
-* It is widely used in habitat mapping but does not support the **granularity and taxonomic structure** needed for genus-level classification of Scleractinian corals.
+- **CATAMI** is a **hybrid morphological-taxonomic classification scheme** designed primarily for **coarse-grained habitat annotation** (e.g., macroalgae, sponge, sand) (*Monk et al.*).
+- Its categories are standardized but often broad, and the **decision tree is purely morphology-driven**, with no formal taxonomic hierarchy embedded.
+- It does not support **taxonomic resolution**, making it unsuitable for hard coral studies.
 
-ReefNet’s design explicitly prioritizes **taxonomically grounded, point-level genus classification**, which is **not feasible with CATAMI**. While CATAMI remains valuable for general habitat mapping, **WoRMS uniquely supports the scientific objectives of ReefNet**.
+In short, while CATAMI is useful for habitat-level annotation, **WoRMS is uniquely suited for ReefNet’s goals** of a reproducible taxonomic hard coral benchmark.
 
-We will revise the manuscript to clearly explain this motivation and cite relevant taxonomic standards to support our choice.
+We will revise the manuscript to include this rationale and cite the relevant references to clarify our design choice.
 
 ### 5. Consistency of Point Placement, Annotation Density, and Bias Transparency
 
-Sampling bias from point-placement strategies is a known challenge in benthic ecology, often driven by specific monitoring goals (e.g., focusing on particular coral taxa or reef zones). While ReefNet models do **not use full-image context or sampling density directly**—since each annotation point is treated as an **independent patch-level sample**—we designed the dataset to maximize **transparency and reproducibility** in how those points were originally selected.
+Sampling bias from point-placement strategies is a known consideration in benthic ecology, often driven by monitoring goals (e.g., focusing on reef zones or coral types). While ReefNet models treat each annotation point as an **independent patch-level sample**, we designed the dataset to maximize **transparency and reproducibility** regarding how points were originally placed.
 
-**(i) Explicit annotation method metadata**  
-Each ReefNet image includes a `point_method` tag exported from CoralNet, specifying how annotation points were seeded:
+#### (i) Established methodology and metadata exposure
 
-- `simple-random` (51 sources)  
-- `stratified-random` (23 sources)  
-- `uniform-grid` (2 sources)  
+ReefNet point annotations originate from CoralNet, which uses automated methods like:
 
-Crucially, CoralNet **does not support fully manual, clicked-from-scratch annotations**—ensuring a baseline consistency in point generation across all sources.
+- `simple-random` (51 sources)
+- `stratified-random` (23 sources)
+- `uniform-grid` (2 sources)
 
-**(ii) Standardized manual refinement**  
-After automated point placement, annotators may adjust point positions to avoid image artifacts (e.g., edges, shadows) or target specific coral structures more accurately. While this introduces minor subjectivity, it follows **established ecological annotation protocols** and improves label precision. Some upstream surveys may still focus on certain genera (e.g., Acropora reef flats), but this reflects ecological—not procedural—bias.
+Fully manual point-clicking is **not supported** in CoralNet, ensuring baseline procedural consistency.
 
-**(iii) Annotation density statistics**  
-ReefNet includes 925,322 point annotations across 181,046 images, with:
+Importantly, **random point count methods are a well-established ecological standard**, as shown in benthic surveys (Carleton & Done 1995; Kohler & Gill 2006), and are also widely applied in terrestrial studies (e.g., canopy cover, bird populations, vegetation structure). This reinforces that ReefNet’s point sampling is **scientifically grounded**.
 
-- **Mean**: 40 points/image  
-- **Median**: 22 points/image  
-- **Range**: 25 to 180 points/image  
+#### (ii) Standardized manual refinement
 
-We summarize these statistics in Section 3.3 and Supplementary Fig. S1.
+Annotators may adjust points to avoid artifacts or improve label quality—following accepted protocols in marine annotation. While this may introduce slight subjectivity, it improves taxonomic accuracy and remains ecologically valid.
 
-**(iv) Metadata enables dataset auditing (not modeling)**  
-While ReefNet does **not model** sampling pattern or density, we expose metadata such as `point_method` and point count per image to support downstream auditing. Users can optionally:
+#### (iii) Annotation density statistics
 
-- Filter by method (e.g., only stratified-random annotations)  
-- Restrict to consistent point densities  
-- Study metadata correlations with performance  
+ReefNet includes 925,322 points across 181,046 images:
 
-This transparency supports robust secondary analyses without complicating the training pipeline.
+- **Mean**: 40 points/image
+- **Median**: 22
+- **Range**: 25–180
 
-**(v) Clear limitations and recommendations**  
-We will expand Section 6 (Limitations) to explicitly discuss potential upstream bias and clarify that ReefNet’s strength lies in making such factors **auditable and filterable**. This positions ReefNet as one of the most **transparent and reproducible patch-level coral annotation datasets** currently available.
+We report this in Section 3.3 and Suppl. Fig. S1.
 
-We thank the reviewer for encouraging us to clarify these important design choices.
+#### (iv) Auditability via metadata
 
-### 6. Clarifying Expert Verification and Reviewer Qualifications (Section 3.1)
+While ReefNet does **not model** point density or sampling method during training, we expose these fields so users can:
 
-Due to space constraints, the full filtering and verification procedure was not detailed in the main paper in 3.1. However, it is presented in **Supplementary Section S1**, with an overview diagram in **Figure S1**. We will revise **Section 3.1** of the main manuscript to better summarize this pipeline and clearly refer readers to the Supplementary for methodological transparency.
+- Filter by `point_method`
+- Restrict to consistent densities
+- Explore correlations between sampling and performance
 
-#### (i) Motivation for Expert Verification
+#### (v) Limitation acknowledgment
 
-We do **not assume that our experts are inherently “better”** than the original CoralNet annotators. Rather, we performed a **manual audit of on CoralNet sources** and discovered:
+We will expand Section 6 to note that while upstream sampling variability exists, ReefNet’s strength lies in making such factors **auditable and filterable**, unlike many ecological datasets. We thank the reviewer for encouraging this clarification.
 
-- Taxonomic inconsistencies (e.g., mixed naming conventions),
-- Annotation noise (e.g., coarse or ambiguous labels),
-- Incorrect genus-level assignments (e.g., mislabeling of Acropora genus).
+### 6. Clarifying Expert Verification Process and Team Qualifications (§3.1)
 
-These findings led us to initiate a **systematic expert-guided filtering process**, to raise label consistency, ecological fidelity, and taxonomic precision across ReefNet.
+We agree Section 3.1 should better summarize the expert verification process. Full details and a workflow diagram appear in **Supplementary §S1 and Fig. S1**, and we will revise the main text to highlight them more clearly.
 
-#### (ii) Expert Team Composition
+#### (i) Why re-verify CoralNet labels?
 
-Our verification team included:
+We do **not claim our experts are inherently superior** to the original CoralNet annotators. However, our audit revealed:
 
-- **Two senior coral domain experts**, one serving as field lead,
-- **Seven Ph.D.-level coral taxonomists** with research expertise in coral systematics and reef ecology.
+- Taxonomic inconsistencies across sources,
+- Mislabeling (e.g., Acropora genus errors),
+- Lack of standardization in label conventions.
 
-All reviewers are active contributors to global coral monitoring efforts. Their names and ORCID IDs will be added in the Acknowledgments.
+More importantly, **each CoralNet source is labeled by a different group**, often with varying taxonomic expertise. While this is acceptable within a source, it **introduces noise and bias when merging across sources**. ReefNet addresses this by applying **centralized expert verification across all sources**, establishing a consistent cross-source quality baseline that CoralNet alone cannot provide.
 
-#### (iii) Review Protocol
+#### (ii) Who are the reviewers?
 
-We conducted **stratified random sampling** over 8,962 patches, assigning 10 patches per genus per source to each reviewer without overlap. Reviewers:
+Our team included:
 
-- Labeled each patch independently,
-- Flagged low-quality or ambiguous samples,
-- Requested escalation to a more senior expert when needed.
+- **1 internationally recognized coral taxonomist**,
+- **3 senior coral ecologists**, and
+- **6 PhD-level experts** in coral systematics and reef monitoring.
 
-Labels were accepted via **majority agreement**, and patches with persistent disagreement were excluded or flagged as low-confidence. This **raised inter-expert agreement from 73% to 92%**, indicating substantial reliability gains through the review process.
+Reviewer names and ORCID IDs will be added in the acknowledgments.
 
-#### (iv) Contribution of Expert Verification
+#### (iii) Review protocol
 
-The expert filtering did not seek to “override” CoralNet, but to:
+We used **stratified random sampling** to select **8,962 patches** (10 per genus per source). Each reviewer:
 
-- Normalize labels using **WoRMS AphiaIDs** for taxonomic rigor,
-- Resolve inconsistencies across sources,
-- Ensure a **reliable, reproducible benchmark** for ML-based coral classification.
+- Annotated patches independently,
+- Flagged uncertain samples,
+- Relied on **majority vote**; unresolved cases were excluded or flagged low-confidence.
 
-We will revise the manuscript to clearly communicate the intent and structure of this verification process. We thank the reviewer again for the opportunity to clarify this key aspect of the ReefNet pipeline.
+This process improved inter-expert agreement from **73% to 92%**.
 
-### 7. Data-access complexity (scripts + HuggingFace)
+#### (iv) Goals of expert filtering
 
-We agree that the steps included in the process of downloading ReefNet data and reproducing what we have on the paper can be a bit of a headache, To simplify access, we will package a `pip`-installable CLI tool that:
+Rather than override CoralNet, our review process:
 
-1. Downloads public CoralNet sources images that were included in ReefNet study, the user will have control over which sources to include or exclude
-2. Downloads annotations CSV files from the ReefNet repository
-3. Commands to generate the two benchmark splits (`high_conf` and `mod_conf`) with expert agreement levels
-4. Includes a Jupyter Notebook to reproduce both benchmark splits with two expert agreement levels
-5. Provides a simple API to load the dataset via HuggingFace
-This will allow users to easily generate the splits and access the dataset without needing to manually download or process files.
-The CLI tool will be documented in the repository and will include examples for common use cases.
-This will allow users to easily generate the splits and access the dataset without needing to manually download or process files.
+- Standardizes labels using **WoRMS AphiaIDs**,
+- Resolves cross-source inconsistency,
+- Produces a **reproducible, high-confidence benchmark** suitable for ML research.
 
-The Al-Wajh dataset will be made available on HuggingFace:
+We will revise **§3.1** to summarize this and explicitly cite the consistency benefits of centralized review.
+
+### 7. Simplifying Data Access (Scripts + HuggingFace)
+
+We acknowledge that reproducing the results from ReefNet currently involves multiple manual steps, and we appreciate the reviewer highlighting this.
+
+To address this, we are preparing a **`pip`-installable CLI tool** that will streamline dataset access and preparation. Specifically, it will:
+
+1. Download public CoralNet source images used in ReefNet, with user control over which sources to include.
+2. Download all ReefNet annotation CSVs.
+3. Generate both benchmark splits (`high_conf` and `mod_conf`) using expert agreement levels.
+4. Include a Jupyter notebook demonstrating end-to-end setup of the splits.
+5. Provide a minimal API for loading ReefNet through HuggingFace Datasets.
+
+This enables easy dataset access and preparation.
+
+In addition, the **Al-Wajh Red Sea dataset** will be made available directly on HuggingFace:
 
 ```python
-datasets.load_dataset("reefnet/al-wajh")
+from datasets import load_dataset
+load_dataset("reefnet/al-wajh")
 ```
 
 **The minor wording, formatting, and reference corrections noted by the reviewer will be addressed in the camera-ready version.**
