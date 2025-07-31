@@ -44,14 +44,17 @@ These changes ensure that readers — whether from machine learning or ecology b
 
 ### 2. Clarifying Patch Extraction Protocol (§5.1)
 
-Each annotated point in ReefNet corresponds to a **centered square image patch of size 512×512 pixels**. This patch size was selected after pilot testing to balance local texture fidelity with sufficient spatial context for taxonomic classification.
+Thank you for raising this point. In ReefNet, each annotated point corresponds to a **512×512 pixel patch**, carefully centered on the point label. We selected this size through **extensive pilot testing**—evaluating patch sizes of 224×224, 448×448, and 512×512—to balance **local texture detail** with broader spatial context for accurate genus-level identification.
 
-To improve clarity:
-- We will move this detail from §S3.1 to **§3.1 (Dataset Construction)** in the main paper.
-- We will explicitly reference the patch extraction process in **§5.1 (Benchmark Setup)**.
-- We will also update the **caption of Figure 4** to clarify that each sample shown corresponds to a centered patch around a labeled point.
+Notably, the **224×224 pixel size** is the default convention used by CoralNet and is standard in many coral classification studies *(A New Deep Learning Engine for CoralNet, Beijbom et al.)*, *(Coral Image Patch Classification with Deep CNNs, Williams et al.)*, *(Towards Automatic Coral Reef Benthic Composition Estimation, Vega et al.)*. However, our experiments showed that using 512×512 produced a **+8% macro recall improvement**.
 
-These updates will ensure the patch-based classification protocol is fully transparent and accessible to readers unfamiliar with CoralNet-derived workflows.
+To enhance clarity and reproducibility:
+- We will move this information from §S3.1 to **§3.1 (Dataset Construction)** in the main paper.
+- We will explicitly reference the patch size and extraction procedure in **§5.1 (Benchmark Setup)**.
+- We will update the **caption of Figure 4** to note that each image corresponds to a 512×512-centered patch around a point.
+
+These changes will make our patch-based approach fully transparent, aligning ReefNet’s preprocessing choices with both ecological relevance and reader expectations.
+
 
 ### 3. Clarifying ReefNet vs. BenthicNet (Lines 90–94)
 
