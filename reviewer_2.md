@@ -6,27 +6,24 @@ In the following, we address each concern in turn. For clarity, we organize our 
 ## 1. Novelty beyond *“just CoralNet”*
 
 **Clarification on CoralNet's Nature:**
-CoralNet is primarily an annotation platform hosting thousands of independent image sets ("sources") contributed by separate research groups, each with unique labeling conventions and quality levels. It does not constitute a standardized or harmonized dataset suitable for benchmarking.
+CoralNet is primarily an annotation platform hosting thousands of independent image sets ("sources") contributed by different research groups, each with its own labeling conventions and quality standards. It does not constitute a standardized or harmonized dataset suitable for benchmarking.
 
 **Novel Contributions of ReefNet:**
 
 - **Taxonomic Harmonization:**
-  We mapped and standardized all 925,000 point labels to the *World Register of Marine Species (WoRMS)*, establishing the first genus-level, WoRMS-consistent dataset specifically designed for coral reef analysis using machine learning.
+  We mapped and standardized all ~925K point labels to the *World Register of Marine Species (WoRMS)*, establishing the first genus-level, WoRMS-consistent dataset specifically designed for hard coral reef analysis using machine learning.
 
 - **Expert-Driven Quality Assurance:**
-  We conducted rigorous validation involving expert re-verification of nearly 9,000 randomly sampled labels, significantly raising the inter-expert consensus from 73% to 92%, thus ensuring higher reliability compared to existing sources.
+  We conducted expert re-verification of nearly 9K randomly sampled labels, improving validation agreement from 73% to 92%. This ensures significantly higher reliability compared to the raw CoralNet data, which lacks clear quality indicators per source.
 
 - **Innovative Benchmark Structure:**
-  ReefNet introduces structured *in-distribution (ID)* and *out-of-distribution (OOD)* splits, enabling robust evaluation in line with contemporary ML benchmarking standards—an essential feature missing from CoralNet.
+  ReefNet introduces structured *in-distribution (ID)* and *out-of-distribution (OOD)* splits, enabling evaluation in line with contemporary ML benchmarking practices—an essential feature missing in CoralNet.
 
 - **Geographical Novelty:**
-  ReefNet uniquely includes 1,300 expert-verified images from Al-Wajh in the Red Sea, addressing a critical gap since this region is both ecologically important and understudied.
+  ReefNet uniquely includes 1.3K expert-verified images from Al-Wajh in the Red Sea, addressing a critical gap since this region is both ecologically important and understudied.
 
 - **Future-proofing and Expansion:**
   ReefNet's framework is designed for ongoing growth, with active plans to integrate substantial institutional datasets (e.g., NOAA’s NCRMP, AIMS Long-Term Monitoring) following the same rigorous standards.
-
-- **Visualization of Contributions:**
-  To further clarify and demonstrate the transformative impact of ReefNet's curation process, we will enhance Section 3 with a before-and-after flow diagram and comparison table, clearly delineating the improvements and novelty introduced by ReefNet.
 
 We believe these critical enhancements and clarifications underscore the significance of ReefNet’s contributions, transforming fragmented image resources into a cohesive, reliable, and innovative benchmark for coral reef research.
 
