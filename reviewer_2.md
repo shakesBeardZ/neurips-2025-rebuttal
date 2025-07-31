@@ -50,37 +50,29 @@ As shown in Table 3 of the paper, this tradeoff is nuanced: in some cases, train
 We will clarify this intent in the manuscript and explicitly note that the **high-confidence set is a filtered subset of the moderate-confidence set**. We appreciate the reviewer prompting us to strengthen the transparency of this benchmark design.
 
 ## 4. Multi-label nature of ReefNet and Fig. 4 clarification
-
 **(a) Patch-level, single-label classification**
 ReefNet follows the dominant ecology workflow: each image is overlaid with *sparse points*. A fixed-size patch (512×512 px) is cropped around every point and assigned *one* genus label.
 A model performs *single-label* prediction *per patch*, not per whole image.
 
 **(b) Why Fig. 4 looked confusing**
-The figure shows example **patches**, so only one label is visible at a time.
-We will:
+The figure presents example **patches**, each labeled based only on the **center point**, which is where the annotation was made. However, multiple objects may appear within the same patch — as seen in the rightmost example. The dataset, however, does not support multi-label annotations, a limitation we highlight in the next point.
 
-- Revise the caption to say “Patch-level examples”
-- Add a schematic in §3 (new Fig. 5) showing how multiple patches originate from one photo (mean ≈ 40 points/image)
+To Remove ambiguity around Fig. 4 We will:
+- Revise the caption to say: *“Qualitative patch-level examples from the test set.”*
+- Clarify in the caption that the label corresponds to the object at the patch’s center point.
+- Adding a schematic in the supplementary showing how multiple patches originate from a single image (mean ≈ 40 annotated points per image).
 
-**(c) Image-level multi-label statistics**
-Each image contains many points, so ReefNet is *multi-label at the photo level*: on average five different genera per image (§3.4; new Supp. Fig. S5).
-This mirrors other platforms like ReefCloud and CoralNet.
+**(c) Image-level and patch-level multi-label support**  
+Each image contains many annotated points, so ReefNet is *multi-label at the image-level*, with an average of five different genera per image. Investigating patch-level samples with a patch size of 512×512 px, we found that fewer than 1.7% of patches contain more than one label. This becomes even more scarce after applying the different splits in the proposed benchmarks, where the in-source and cross-source test samples contain only 0.4% and 0.1% of patches with multiple labels, respectively. This scarcity limits the design and evaluation of multi-label classification in ReefNet.
 
-**(d) Why point-patch (not bounding boxes) matches reef ecology practice**
+**(d) Why point-patch annotation (not bounding boxes or dense annotations)**
 
-- *Percent cover surveys:* Random-point counts have been the standard for \~20 years.
-- *Annotation cost:* Full object masks or boxes are much slower and rare in coral datasets.
-- *Existing ML tooling:* CoralNet and 3D reef pipelines already classify patches this way.
+- *Percent cover surveys:* Random-point annotation within images has been the standard method in reef ecology for over 20 years, and CoralNet datasets are based on this approach.
+- *Annotation cost:* Creating full object masks or bounding boxes is much slower and more labor-intensive. Furthermore, automatic annotation tools face significant challenges due to the complex visual characteristics of coral imagery.
 
-**(e) Road-map to dense tasks**
+
+**(e) Road-map to dense masks**
 We release full-image tiles and point coordinates to enable weakly-supervised segmentation or object detection in future work.
-**(f) Manuscript edits**
-
-- Rename §3.1 to “Point–patch annotation protocol” and add schematic
-- Update Fig. 4 caption to “Patch-level examples (single label per patch)”
-- Cite CoralNet and ReefCloud as prior art
-
-These clarifications should remove ambiguity around Fig. 4 and explain why patch-based single-label classification is the de-facto standard for scalable reef monitoring.
 
 ## 5. Licensing of data, images, and code
 
