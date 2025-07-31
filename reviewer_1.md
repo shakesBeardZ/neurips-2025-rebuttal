@@ -33,7 +33,7 @@ To address these challenges, we propose **ReefNet** with the following key contr
    We developed reproducible benchmarks with defined splits. For instance:
    - The *within-source* split evaluates performance on data with similar distribution between train and test.
    - The *cross-source* split assesses robustness to possible domain shifts due to differences in imagery tools, weather conditions, depth, and other environmental or capture-related factors.
-   
+   - The *expert agreement* splits allow for controlled comparisons between training on larger datasets with potentially noisy labels versus smaller, cleaner datasets.
    The benchmarks also investigate the tradeoff between training data quantity and quality.
 
 4. **Red Sea–focused benchmark**:  

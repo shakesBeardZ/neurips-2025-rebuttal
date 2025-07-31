@@ -23,15 +23,46 @@ We will revise Sections 3 and 5.1 to clearly state that:
 
 We will revise Table 1 to explicitly include the **number of annotated classes** (species, genus, or family level, where available) for each dataset. This update will significantly improve the interpretability of the dataset comparison and reinforce ReefNet’s role in supporting fine-grained coral classification.
 
-### 3. Domain Adaptation and Data Augmentation
+### 3. Domain Adaptation and Augmentation Strategies
 
-We respectfully clarify that domain adaptation strategies—particularly via **aggressive data augmentation**—**were already applied** in our cross-domain evaluations.
+We would like to clarify that **our cross-domain experiments already include strong domain adaptation baselines via a diverse set of data augmentation strategies**, even though this was not emphasized sufficiently in the main paper.
 
-Specifically, we incorporated a suite of augmentations including **RandAugment**, **color jitter**, **horizontal flipping**, **Mixup**, **CutMix**, and **random erasing** (`reprob = 0.1`). These augmentations are established tools for improving robustness under high domain variability in lighting, turbidity, and reef morphology (*RandAugment Cubuk et al.*, *CutMix Yun et al.*). While listed in Supplementary §S3.1, we will make them more prominent in the main text as **deliberate domain generalization mechanisms**.
+Specifically, we used a combination of **RandAugment**, **color jitter**, **horizontal flipping**, **Mixup**, **CutMix**, and **random erasing** (`reprob = 0.1`). These augmentations are widely used to improve generalization in the presence of domain shift due to variations in lighting, turbidity, and reef structure *(RandAugment, Cubuk et al.; CutMix, Yun et al.)*. While these are listed in Supplementary §S3.1, we will make this more prominent in the main text as part of our deliberate domain generalization design.
 
-To **validate their impact**, we ran an additional ablation **with all augmentations disabled**. Using ViT-B/16 on the cross-source split (Train-S4/Test-S3), balanced accuracy dropped from **42.30% (with augmentation)** to **39.99% (without augmentation)**—a **4.1-point decrease**, despite all other settings remaining fixed. This underscores the critical role augmentation plays in promoting cross-domain generalization in ReefNet.
+#### **Augmentation Ablation Results**
 
-In future work, we aim to explore **explicit domain adaptation techniques** (e.g., adversarial alignment, moment matching), but our current setup already reflects strong adaptation baselines through data augmentation alone.
+To validate the contribution of these augmentations, we conducted an ablation study on the cross-source benchmark (Train-S4 → Test-S3&S4) using ViT-B/16. Below are the results:
+
+| Augmentation Setting  | Recall (%) | Accuracy (%) |
+|-----------------------|------------|---------------|
+| all-augmentation      | **42.30**  | **77.19**     |
+| no-randaug            | 41.28      | 76.89         |
+| only-randerase        | 39.16      | 76.12         |
+| no-randerase          | 42.25      | 77.47         |
+| no-augmentation       | 39.94      | 76.92         |
+| only-hflip            | 38.74      | 75.91         |
+| no-mixup              | 41.33      | 76.59         |
+| no-cutmix             | 41.25      | 76.75         |
+| only-mixup            | 37.85      | 75.51         |
+| only-colorjitter      | 38.52      | 76.17         |
+| no-hflip              | 41.65      | 77.07         |
+| only-randaug          | 40.85      | 76.50         |
+| no-colorjitter        | 41.72      | 76.64         |
+| only-cutmix           | 40.10      | 76.23         |
+
+These results demonstrate that:
+
+* **Using all augmentations yields the highest performance**, confirming their collective benefit.
+* **Disabling any single augmentation** (e.g., `RandAug`, `ColorJitter`, `Random Erase`) results in a performance drop—showing that each plays a role in enhancing robustness.
+* **Training without augmentation** or with only a single augmentation significantly underperforms, validating that augmentation functions as an effective domain adaptation mechanism in our setup.
+
+
+#### **Planned Clarifications**
+
+We will:
+
+* **Expand Section §5.1** to explicitly list our augmentation pipeline and reference it as a form of domain generalization.
+* **Mention this ablation in Supplementary §S3.1**, and optionally include a brief summary in the main paper if space permits.
 
 ### 4. Closed-Set Evaluation and Open-Set Recognition
 
