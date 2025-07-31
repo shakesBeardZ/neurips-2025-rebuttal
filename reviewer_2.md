@@ -102,7 +102,7 @@ While the ViT-2Head model improved overall macro recall, we did not observe a co
 
 
 
-## 5. Licensing of data, images, and code
+## 5. Licensing of Data, Images, and Code
 
 We appreciate the reviewer’s suggestion and will declare licensing terms in the “Data Availability” section, `LICENSE` files, and GitHub `README`.
 
@@ -126,7 +126,7 @@ These choices ensure:
 2. Open scientific use of annotations and code
 3. Clear, consistent separation between data and software
 
-## 6. Editorial tweaks (addressing Additional Feedback)
+## 6. Editorial Fixes (addressing Additional Feedback)
 
 We will incorporate every suggestion in the camera-ready version:
 
