@@ -75,7 +75,7 @@ We release full-image tiles and point coordinates to enable weakly-supervised se
 
 **(f) Hierarchical classification as a multi-label experiment**
 
-An alternative to single-label genus classification is to leverage both genus-level and family-level labels for the same annotated point (note: all hard coral samples share the same order-level taxonomy). To explore this, we trained a ViT model with two classification heads—one for genus and one for family—on the cross-source benchmark (Train-S4, Test-S3&S4). 
+An alternative to single-label genus classification is to use both genus-level and family-level labels for the same annotated point (note: all hard coral samples share the same order-level taxonomy). To explore this, we trained a ViT model with two classification heads—one for genus and one for family—on thecross-source benchmark (Train-S4 → Test-S3&S4). 
 We refer to the model with two heads as *ViT-2Head*, and to its two outputs as *ViT-2Head-Genus* and *ViT-2Head-Family*. The baseline model with a single genus head is referred to as *ViT-Genus*. Interestingly, *ViT-2Head* improved genus classification performance by more than **2%**.
 
 Since there is a one-to-one mapping from genus to family, we also evaluated family-level classification using two approaches:
@@ -90,12 +90,12 @@ This table summarizes the results:
 | ViT-2Head-Family   | N/A                               | 53.74                              |
 
 
-To better understand per-class behavior, we examined performance on:
+To better understand class-wise behavior, we examined performance on:
 - **Astreopora** (*Acroporidae*): a relatively common genus  
 - **Echinopora** (*Merulinidae*): a less common genus  
 - **Echinophyllia** (*Lobophylliidae*): another less common genus
 
-While the ViT-2Head model improved overall macro recall, we did not observe a consistent pattern of improvement across individual genera. Notably, rare genera did not show clear gains from the hierarchical setup.
+While the ViT-2Head model improved overall macro recall, we did not observe a consistent pattern across genera. Rare genera, in particular, did not consistently benefit from the hierarchical setup.
 
 | Genera         | Family          | ViT-Genus Genus Recall | ViT-Genus Family Recall | ViT-2Head Genus Recall | ViT-2Head Family Recall |
 |----------------|------------------|--------------------------|---------------------------|---------------------------|----------------------------|
