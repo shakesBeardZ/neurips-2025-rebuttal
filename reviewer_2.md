@@ -51,25 +51,24 @@ We will clarify this intent in the manuscript and explicitly note that the **hig
 
 ## 4. Multi-label nature of ReefNet and Fig. 4 clarification
 **(a) Patch-level, single-label classification**
-ReefNet follows the dominant ecology workflow: each image is overlaid with *sparse points*. A fixed-size patch (512×512 px) is cropped around every point and assigned *one* genus label.
-A model performs *single-label* prediction *per patch*, not per whole image.
+ReefNet follows the standard ecology workflow: each image is overlaid with *sparse points*. A fixed-size patch (512×512 px) is cropped around every point and assigned *one* genus label.
+A model performs *single-label* prediction *per patch*, not at the image level.
 
 **(b) Why Fig. 4 looked confusing**
-The figure presents example **patches**, each labeled based only on the **center point**, which is where the annotation was made. However, multiple objects may appear within the same patch — as seen in the rightmost example. The dataset, however, does not support multi-label annotations, a limitation we highlight in the next point.
+The figure presents example **patches**, each labeled based only on the **center point**, which is where the annotation was made. However, multiple objects may appear within the same patch — as seen in the rightmost example. However, the dataset does not support multi-label annotations, a limitation we highlight in the next point.
 
-To Remove ambiguity around Fig. 4 We will:
+To remove ambiguity in Fig. 4 we will:
 - Revise the caption to say: *“Qualitative patch-level examples from the test set.”*
 - Clarify in the caption that the label corresponds to the object at the patch’s center point.
-- Adding a schematic in the supplementary showing how multiple patches originate from a single image (mean ≈ 40 annotated points per image).
+- Add a schematic in the supplementary showing how multiple patches originate from a single image (mean ≈ 40 annotated points per image).
 
 **(c) Image-level and patch-level multi-label support**  
 Each image contains many annotated points, so ReefNet is *multi-label at the image-level*, with an average of five different genera per image. Investigating patch-level samples with a patch size of 512×512 px, we found that fewer than 1.7% of patches contain more than one label. This becomes even more scarce after applying the different splits in the proposed benchmarks, where the in-source and cross-source test samples contain only 0.4% and 0.1% of patches with multiple labels, respectively. This scarcity limits the design and evaluation of multi-label classification in ReefNet.
 
 **(d) Why point-patch annotation (not bounding boxes or dense annotations)**
 
-- *Percent cover surveys:* Random-point annotation within images has been the standard method in reef ecology for over 20 years, and CoralNet datasets are based on this approach.
-- *Annotation cost:* Creating full object masks or bounding boxes is much slower and more labor-intensive. Furthermore, automatic annotation tools face significant challenges due to the complex visual characteristics of coral imagery.
-
+- *Percent cover surveys:* Random-point annotation within images has been the standard practice in reef ecology for around 20 years, and CoralNet datasets are based on this approach.
+- *Annotation cost:* Full masks, bounding boxes, or dense annotations are much slower to annotate and labor-intensive. Automatic annotation tools also struggle due to the domain’s visual complexity.
 
 **(e) Road-map to dense masks**
 We release full-image tiles and point coordinates to enable weakly-supervised segmentation or object detection in future work.
@@ -91,16 +90,19 @@ This table summarizes the results:
 | ViT-2Head-Family   | N/A                               | 53.74                              |
 
 
-Further, we examined the performance on 
-- [Genera: Astreopora - Family: Acroporidae] (common)
-- [Genera: Echinopora - Family: Merulinidae] (less common)
-- [Genera: Echinophyllia - Family: Lobophylliidae] (less common)
+To better understand per-class behavior, we examined performance on:
+- **Astreopora** (*Acroporidae*): a relatively common genus  
+- **Echinopora** (*Merulinidae*): a less common genus  
+- **Echinophyllia** (*Lobophylliidae*): another less common genus
 
-The ViT-2Head improved the overall performance, but we didn't notice a special pattern or improvement, also we didn't notice improvements on rare genera.
-Model (column): ViT-Genus, ViT-2Head
-Class: [Genera: Astreopora, Family: Acroporidae], [Genera: Echinopora, Family: Merulinidae], [Genera: Echinophyllia, Family: Lobophylliidae]
-Recall ViT-Genus: [23.53 - 98.54], [4.44 - 45.71], [15.63 - 45.58]
-Recall ViT-2Head: [5.88 - 98.39], [26.67 - 89.42], [10.42 - 46.05]
+While the ViT-2Head model improved overall macro recall, we did not observe a consistent pattern of improvement across individual genera. Notably, rare genera did not show clear gains from the hierarchical setup.
+
+| Genera         | Family          | ViT-Genus Genus Recall | ViT-Genus Family Recall | ViT-2Head Genus Recall | ViT-2Head Family Recall |
+|----------------|------------------|--------------------------|---------------------------|---------------------------|----------------------------|
+| Astreopora     | Acroporidae      | 23.53                   | 98.54                    | 5.88                     | 98.39                     |
+| Echinopora     | Merulinidae      | 4.44                    | 45.71                    | 26.67                    | 89.42                     |
+| Echinophyllia  | Lobophylliidae   | 15.63                   | 45.58                    | 10.42                    | 46.05                     |
+
 
 
 ## 5. Licensing of data, images, and code
