@@ -2,7 +2,7 @@
 
 ## Reply to the First Reviewer rrwA4 
 
-We appreciate that the reviewer finds ReefNet to be a valuable resource in terms of both quantity and quality, the comprehensive benchmark design, and the broad evaluation of models. We are committed to publishing reproducible materials when we accept them.
+We appreciate that the reviewer finds ReefNet to be a valuable resource in terms of both quantity and quality, the comprehensive benchmark design, and the broad evaluation of models. Upon acceptance, we ensure that all materials are published with full reproducibility.
 
 We also thank the reviewer for the critical feedback. Below, we address each of the limitations and weaknesses raised:
 
@@ -17,26 +17,26 @@ Rather than proposing yet another method, our goal is to establish a robust foun
 Despite the strong dependence on CoralNet, ReefNet addresses key limitations that make it a valuable resource for scientific exploration and development. We believe CoralNet presents challenges that hinder its use as a training and evaluation dataset for algorithmic development in ecological studies. These limitations include:
 
 1. **Lack of a unified label set across different data sources**: CoralNet includes a mix of incompatible label sets, making data integration infeasible.
-2. **Absence of taxonomically verified hard coral labels**: Many sources use alternative, outdated, or generic labels instead of scientifically recognized names (e.g., those in WoRMS).
+2. **Absence of taxonomically verified hard coral labels**: Many sources use alternative, outdated, or generic labels instead of scientifically recognized names (e.g., those in World Register of Marine Species).
 3. **No standardized quality control**: The absence of quality checks makes it difficult to identify reliable samples, which is essential for training and especially for evaluation.
 4. **No large-scale benchmark setting**: There is no established framework for standardized evaluation or model comparison.
 
 To address these challenges, we propose **ReefNet** with the following key contributions:
 
-1. **WoRMS-based unified taxonomic labeling**:  
+1. **World Register of Marine Species (WoRMS)-based unified taxonomic labeling**:  
    ReefNet adopts a unified labeling scheme based on WoRMS to integrate data from multiple sources. This also enabled the inclusion of a Red Sea–focused dataset. We hope this labeling scheme encourages future efforts to adopt taxonomically sound annotations.
 
 2. **Rigorous re-verification**:  
-   Using our custom web tool, we re-verified 8,962 annotations and retained only those with high agreement scores. This rigorous process ensures benchmark quality and consistency.
-
-3. **Standardized benchmarks**:  
+   Our methodology also addresses inconsistencies in annotation provenance across CoralNet sources, where each dataset was labeled by a distinct group of annotators with different levels of expertise. While this variability is manageable within individual sources, it becomes problematic when combining multiple datasets. To mitigate this, we introduced a centralized verification step. The same review team, though composed of individuals with different backgrounds, evaluated all included sources, ensuring a consistent and cross-source quality standard that would not be achievable by just merging datasets.
+      
+4. **Standardized benchmarks**:  
    We developed reproducible benchmarks with defined splits. For instance:
    - The *within-source* split evaluates performance on data with similar distribution between train and test.
    - The *cross-source* split assesses robustness to possible domain shifts due to differences in imagery tools, weather conditions, depth, and other environmental or capture-related factors.
    - The *expert agreement* splits allow for controlled comparisons between training on larger datasets with potentially noisy labels versus smaller, cleaner datasets.
    The benchmarks also investigate the tradeoff between training data quantity and quality.
 
-4. **Red Sea–focused benchmark**:  
+5. **Red Sea–focused benchmark**:  
 A dedicated Red Sea split (Al-Wajh) enables testing model generalization on an ecologically important but underrepresented region.
 
 
