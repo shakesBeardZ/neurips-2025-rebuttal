@@ -19,7 +19,7 @@ to:
 
 > “...∼925K **point-level genus annotations**, supporting **localized patch classification**...”
 
-We hope This clarifies both task type and annotation granularity.
+We hope this clarifies both task type and annotation granularity.
 
 #### (ii) Hard Coral–Only Scope
 
@@ -33,14 +33,14 @@ We will clarify this scope in **Sections 1 and 3**, and are open to adding “ha
 
 ### 2. Clarifying Patch Extraction Protocol (§5.1)
 
-Each ReefNet annotation is centered in a **512×512 pixel patch**, used for **patch-level classification**. This size was chosen after testing 224×224, 448×448, and 512×512 options to balance local detail and spatial context.
+Each ReefNet annotation is centered in a **512×512 pixel patch**, used for **patch-level classification**. This size was chosen after testing 224×224, and 512×512 options to balance local detail and spatial context.
 
 224×224 is standard in CoralNet and prior studies (Beijbom et al.; Williams et al.; Vega et al.), but 512×512 improved macro recall by **+8%**.
 
 To improve clarity:
 - We will move this detail from §S3.1 to **§3.1** (main paper)
 - Mention patch extraction in **§5.1**
-- Update **Figure 4 caption** to state that patches are centered 512×512 patches
+- Update **Figure 4 caption** to state that patches are 512×512 and centered on point annotations
 
 These edits ensure transparency in our patch-based pipeline and evaluation.
 
@@ -93,7 +93,7 @@ ReefNet point annotations originate from CoralNet, which uses automated methods 
 
 Fully manual point-clicking is **not supported** in CoralNet, ensuring baseline procedural consistency.
 
-Importantly, **random point count methods are a well-established ecological standard**, as shown in benthic surveys (Carleton & Done 1995; Kohler & Gill 2006), and are also widely applied in terrestrial studies (e.g., canopy cover, bird populations, vegetation structure). This reinforces that ReefNet’s point sampling is **scientifically grounded**.
+Importantly, **random-point sampling methods are a well-established ecological standard**, as shown in benthic surveys (Carleton & Done 1995; Kohler & Gill 2006), and are also widely applied in terrestrial studies (e.g., canopy cover, bird populations, vegetation structure). This reinforces that ReefNet’s point sampling is **scientifically grounded**.
 
 #### (ii) Standardized manual refinement
 
@@ -107,7 +107,7 @@ ReefNet includes 925,322 points across 181,046 images:
 - **Median**: 22
 - **Range**: 25–180
 
-We report this in Section 3.3 and Suppl. Fig. S1.
+We will report this in Section 3.3 and Suppl. Fig. S1.
 
 #### (iv) Auditability via metadata
 
@@ -151,9 +151,9 @@ We used **stratified random sampling** to select **8,962 patches** (10 per genus
 
 - Annotated patches independently,
 - Flagged uncertain samples,
-- Relied on **majority vote**; unresolved cases were excluded or flagged low-confidence.
+- Unresolved cases were excluded or flagged low-confidence.
 
-This process improved inter-expert agreement from **73% to 92%**.
+This process improved expert agreement from 73% to 92% by selecting source–class pairs that received high-confidence scores from verifiers.
 
 #### (iv) Goals of expert filtering
 
@@ -175,15 +175,15 @@ To address this, we are preparing a **`pip`-installable CLI tool** that will str
 2. Download all ReefNet annotation CSVs.
 3. Generate both benchmark splits (`high_conf` and `mod_conf`) using expert agreement levels.
 4. Include a Jupyter notebook demonstrating end-to-end setup of the splits.
-5. Provide a minimal API for loading ReefNet through HuggingFace Datasets.
+5. Provide a minimal API for loading Al-Wajh dataset through HuggingFace Datasets.
 
 This enables easy dataset access and preparation.
 
-In addition, the **Al-Wajh Red Sea dataset** will be made available directly on HuggingFace:
+The **Al-Wajh Red Sea dataset** will be made available directly on HuggingFace:
 
 ```python
 from datasets import load_dataset
 load_dataset("reefnet/al-wajh")
 ```
 
-**The minor wording, formatting, and reference corrections noted by the reviewer will be addressed in the camera-ready version.**
+**The wording, formatting, and reference corrections noted by the reviewer will be addressed in the camera-ready version.**
