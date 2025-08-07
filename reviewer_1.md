@@ -1,7 +1,3 @@
-# neurips-2025-rebuttal
-
-## Reply to the First Reviewer rrwA4 
-
 We appreciate that the reviewer finds ReefNet to be a valuable resource in terms of both quantity and quality, the comprehensive benchmark design, and the broad evaluation of models. Upon acceptance, we ensure that all materials are published with full reproducibility.
 
 We also thank the reviewer for the critical feedback. Below, we address each of the limitations and weaknesses raised:
@@ -48,9 +44,6 @@ The Al-Wajh (Red Sea) benchmark extends our evaluation by introducing a focused,
 Point annotations have been the standard in coral research—used in datasets like CoralNet and BenthicNet—due to the difficulty of obtaining dense labels, with annotators typically labeling randomly placed points. 
 While datasets like CoralSCOP, CoralVOS, MosaicsUCSD, and Coralscapes offer segmentation masks, each lacks at least one of the following: genus-level classification of hard corals, global coverage and diversity, or sufficient scale.
 We agree that dense masks are valuable, especially for fine-grained ecological tasks where morphological details matter. However, in this work, we prioritized global coverage, scalability, and annotation quality. We did explore dense labeling methods such as SAM and RITM (with interactive guidance), but found SAM alone unreliable—often missing key objects or over-segmenting—while point guidance improves quality but requires significant manual effort, which we defer to future work. We also note a strong synergy between obtaining masks and point annotations in data preparation: they can be treated as independent tasks, then sparse annotations can be projected onto masks. This is particularly useful since mask creation can be done by trained non-experts, whereas accurate coral identification requires expert annotators. As future work, we plan to provide masks for the Al-Wajh dataset to complement its high-quality point labels. Despite that, the rigorous benchmarks we provide using high-quality sparse annotations establish a solid foundation against which future algorithmic developments—or models using dense labels—can be compared and built upon.
-
-
-
 
 ### **Domain Adaptation and Augmentation Strategies**
 
